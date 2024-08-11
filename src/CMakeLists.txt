@@ -19,4 +19,17 @@ add_executable(${CMAKE_PROJECT_NAME} ${SRC_LIST})
 #add lib
 target_link_libraries(${CMAKE_PROJECT_NAME}  OpenXLSX::OpenXLSX)
 
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${HEADER_DIRS})
+# target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${HEADER_DIRS})
+
+include_directories(${CMAKE_PROJECT_NAME} ${HEADER_DIRS})
+
+include_directories(${CMAKE_PROJECT_NAME} ${CMAKE_SOURCE_DIR}/lib/OpenXLSX)
+
+# 假设你有一个叫做 MyProject 的目标
+get_target_property(INCLUDE_DIRS ${CMAKE_PROJECT_NAME} INCLUDE_DIRECTORIES)
+
+# 打印 include_directories
+# message(STATUS "Include directories for target ${CMAKE_PROJECT_NAME}: ${INCLUDE_DIRS}")
+
+# 打印 src_directories
+# message(STATUS "Src directories for target ${CMAKE_PROJECT_NAME}: ${SRC_LIST}")
