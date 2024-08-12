@@ -1,7 +1,9 @@
 #include "OpenXLSX.hpp"
 #include <string.h>
+#include <vector>
 #include "DateTime.h"
 #include "DataReader.h"
+#include "Statics.h"
 using namespace OpenXLSX;
 using namespace std;
 
@@ -27,9 +29,9 @@ int main() {
     // doc.open(path);
     // doc.close();
 
-    DataReader dr("t");
+    // DataReader dr("t");
     StockPool stk_pool;
 
-    dr.readDataFromWorksheet("Sheet1",&stk_pool);
+    // dr.readDataFromWorksheet("Sheet1",&stk_pool);
     return 0;
 }
