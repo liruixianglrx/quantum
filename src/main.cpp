@@ -6,7 +6,6 @@ using namespace OpenXLSX;
 using namespace std;
 
 int main() {
-    cout<<"ok";
     // XLDocument doc;
     // std::string path = "./Demo07.xlsx";
     // doc.create(path);
@@ -28,7 +27,7 @@ int main() {
     // doc.open(path);
     // doc.close();
 
-    DataReader dr("./t");
+    DataReader dr("t");
     StockPool stk_pool;
 
     dr.readDataFromWorksheet("Sheet1",&stk_pool);
