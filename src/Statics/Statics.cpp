@@ -1,7 +1,8 @@
 #include <vector>
 #include <numeric> // 用于std::accumulate
 #include <cmath>   // 用于sqrt和pow
-// #include "Statics.h"
+#include <stdexcept>
+#include "Statics.h"
 
 namespace Statics{
 

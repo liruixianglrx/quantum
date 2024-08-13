@@ -4,34 +4,19 @@
 #include "DateTime.h"
 #include "DataReader.h"
 #include "Statics.h"
+#include "ADFTest.h"
 using namespace OpenXLSX;
 using namespace std;
 
 int main() {
-    // XLDocument doc;
-    // std::string path = "./Demo07.xlsx";
-    // doc.create(path);
-    // auto wks = doc.workbook().worksheet("Sheet1");
-    // for (auto& row : wks.rows(6)) {
-    //     for (auto cell: row.cells(8)) cell.value() = 66;
-
-    //     // XLRow 类提供了 'cells()' 方法。它提供了行中单元格的开始和结束迭代器。
-    //     // 通过迭代单元格，可以按通常方式读取和写入值。
-    // }
-    // cout << "正在保存电子表格 ..." << endl;
-    // doc.save();
-    // doc.close();
-
-    // doc.open(path);
-    // doc.close();
-
-    // path = "./t.xlsx";
-    // doc.open(path);
-    // doc.close();
-
-    // DataReader dr("t");
+    DataReader dr("t");
     StockPool stk_pool;
 
-    // dr.readDataFromWorksheet("Sheet1",&stk_pool);
+    dr.readDataFromWorksheet("Sheet1",&stk_pool);
+    
+    std::vector <std::string> ADFT_result;
+    auto stk = stk_pool.getStockByCode("000001.SZ");
+    auto arr = stk->getDataByDataName("收盘价");
+    ADFTest::startTest(arr,ADFT_result);
     return 0;
 }
