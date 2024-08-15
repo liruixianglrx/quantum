@@ -20,6 +20,7 @@ public:
     std::vector<std::string> m_stock_info;
 
     void addNewData(const std::string &data_name,double data);
+    int getDataLen();
     std::vector<double> &getDataByDataName(const std::string &data_name);
     Stock(/* args */){};
     ~Stock();
