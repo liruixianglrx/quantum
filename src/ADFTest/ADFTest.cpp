@@ -1,4 +1,5 @@
 #include "ADFTest.h"
+#include <Python.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,7 +7,6 @@
 #include <chrono>
 #include <cstdio>
 
-#include <memory>
 #include <array>
 
 bool ADFTest::writeArrayToFile(const std::vector<double>& arr){
@@ -81,13 +81,39 @@ bool ADFTest::startTest(const std::vector<double> & arr,std::vector<std::string>
         return false;
     }
 
-    std::string cmd = "python " + m_python_file_path;
-    exec(cmd.c_str());
-    // int result = system(cmd.c_str());
-    // if (result != 0) {
-    //     std::cout<<"\nADF Test ERROR : EXEC ERROR\n";
-    //     return false;
-    // }
+    // Py_Initialize();
+    // PyRun_SimpleString("import sys");
+    // PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
+
+    // PyObject* pModule = NULL;
+    // PyObject* pFunc = NULL;
+    // PyObject* pArg = NULL;
+    // pModule = PyImport_ImportModule("testaaa"); 
+    // pFunc = PyObject_GetAttrString(pModule, "Hello");
+    // pArg = Py_BuildValue("(s)", "c++ is the dsadsa test!"); 
+    // PyObject_Call(pFunc, pArg, NULL);
+
+    // Py_Finalize();
+
+    Py_Initialize();
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString("import numpy as np");
+    PyRun_SimpleString("from statsmodels.tsa.stattools import adfuller");
+    PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
+
+    PyObject* pModule = NULL;
+    PyObject* pFunc = NULL;
+    PyObject* pArg = NULL;
+    pModule = PyImport_ImportModule("ADFTest"); 
+    pFunc = PyObject_GetAttrString(pModule, "ProcessData");
+    pArg = Py_BuildValue("(s)", "./data.txt"); 
+
+    // pFunc = PyObject_GetAttrString(pModule, "Hello");
+    // pArg = Py_BuildValue("(s)", "c++ is the dsadsa test!"); 
+
+    PyObject_Call(pFunc, pArg, NULL);
+
+    Py_Finalize();
 
     if (!waitForPythonCompletion(ans)) {
         std::cout<<"\nADF Test ERROR : NO RESULT\n";
@@ -103,4 +129,4 @@ bool ADFTest::startTest(const std::vector<double> & arr,std::vector<std::string>
 std::string ADFTest::m_data_file = "./data.txt";
 std::string ADFTest::m_data_start_flag = "DATA_START";
 std::string ADFTest::m_completion_flag = "PROCESSING_COMPLETE";
-std::string ADFTest::m_python_file_path = "D:/coding/codes/quantum/src/ADFTest/ADFTest.py";
+// std::string ADFTest::m_python_file_path = "D:/coding/codes/quantum/src/ADFTest/ADFTest.py";
