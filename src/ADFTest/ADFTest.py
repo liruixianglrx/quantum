@@ -24,10 +24,3 @@ def ProcessData(filePath):
 def Hello(s):
     print("hello man")
     print(s)
-
-
-ProcessData("./data.txt")
-# if __name__ == "__main__":
-#     data_file = "D:/coding/codes/quantum/src/ADFTest/data.txt"
-#     process_data(data_file)
-#     print("Python processing complete. Flag written to file.")

@@ -25,14 +25,4 @@ public:
     Stock(/* args */){};
     ~Stock();
 };
-
-// Stock::Stock(/* args */)
-// {
-// }
-
-// Stock::~Stock()
-// {
-// }
-
-
 #endif // STOCK_H

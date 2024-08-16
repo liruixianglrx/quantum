@@ -22,12 +22,4 @@ public:
     int getStockNum();
 };
 
-// StockPool::StockPool(/* args */)
-// {
-// }
-
-// StockPool::~StockPool()
-// {
-// }
-
 #endif // STOCKPOOL_H
