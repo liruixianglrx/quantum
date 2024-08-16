@@ -81,21 +81,9 @@ bool ADFTest::startTest(const std::vector<double> & arr,std::vector<std::string>
         return false;
     }
 
-    // Py_Initialize();
-    // PyRun_SimpleString("import sys");
-    // PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
-
-    // PyObject* pModule = NULL;
-    // PyObject* pFunc = NULL;
-    // PyObject* pArg = NULL;
-    // pModule = PyImport_ImportModule("testaaa"); 
-    // pFunc = PyObject_GetAttrString(pModule, "Hello");
-    // pArg = Py_BuildValue("(s)", "c++ is the dsadsa test!"); 
-    // PyObject_Call(pFunc, pArg, NULL);
-
-    // Py_Finalize();
-
     Py_Initialize();
+
+    // TODO:当一系列时，每次都要import太耗时
     PyRun_SimpleString("import sys");
     PyRun_SimpleString("import numpy as np");
     PyRun_SimpleString("from statsmodels.tsa.stattools import adfuller");
@@ -106,10 +94,7 @@ bool ADFTest::startTest(const std::vector<double> & arr,std::vector<std::string>
     PyObject* pArg = NULL;
     pModule = PyImport_ImportModule("ADFTest"); 
     pFunc = PyObject_GetAttrString(pModule, "ProcessData");
-    pArg = Py_BuildValue("(s)", "./data.txt"); 
-
-    // pFunc = PyObject_GetAttrString(pModule, "Hello");
-    // pArg = Py_BuildValue("(s)", "c++ is the dsadsa test!"); 
+    pArg = Py_BuildValue("(s)", m_data_file.c_str()); 
 
     PyObject_Call(pFunc, pArg, NULL);
 
@@ -120,7 +105,7 @@ bool ADFTest::startTest(const std::vector<double> & arr,std::vector<std::string>
         return false;
     }
 
-    // cleanUp();
+    cleanUp();
 
     return true;
 }; 
