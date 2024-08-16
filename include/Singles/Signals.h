@@ -1,26 +1,26 @@
-// #ifndef SIGNALS_H
-// #define SIGNALS_H
+#ifndef SIGNALS_H
+#define SIGNALS_H
 
-// // #include <string>
-// // #include <vector>
-// #include "StockPool.h"
-// #include "IStrategy.h"
+// #include <string>
 // #include <vector>
-// /* Write your declarations here */
-// class Signals
-// {
-// private:
-//     StockPool *m_stk_pool;
-//     IStrategy *m_stratege;
-//     std::vector<std::string> m_data_name;
-//     // std::vector<int> m_op_stockidx;
-//     //买序号为idx，date的stock
-//     std::vector<std::vector<bool>> m_buy_stockidx_date;
+#include "StockPool.h"
+#include "IStrategy.h"
+#include <vector>
+/* Write your declarations here */
+class Signals
+{
+private:
+    StockPool *m_stk_pool;
+    IStrategy *m_stratege;
+    std::vector<std::string> m_data_name;
+    // std::vector<int> m_op_stockidx;
+    //买序号为idx，date的stock
+    std::vector<std::vector<bool>> m_buy_stockidx_date;
 
-// public:
-//     Signals(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s){};
-//     void generateSignals();
-//     std::vector<std::vector<bool>>& getSignals();
-// };
+public:
+    Signals(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s){};
+    void generateSignals();
+    std::vector<std::vector<bool>>& getSignals();
+};
 
-// #endif // SIGNALS_H
+#endif // SIGNALS_H

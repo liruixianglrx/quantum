@@ -18,7 +18,8 @@ add_executable(${CMAKE_PROJECT_NAME} ${SRC_LIST})
 
 #add lib
 target_link_libraries(${CMAKE_PROJECT_NAME}  OpenXLSX::OpenXLSX)
-target_link_libraries(${CMAKE_PROJECT_NAME}  /home/lrx/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+# target_link_libraries(${CMAKE_PROJECT_NAME}  /home/lrx/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+target_link_libraries(${CMAKE_PROJECT_NAME}  /Users/liruixiang/codes/quantum/lib/python3.12/libpython3.12.dylib)
 
 # target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${HEADER_DIRS})
 

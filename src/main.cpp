@@ -9,6 +9,7 @@ using namespace OpenXLSX;
 using namespace std;
 
 int main() {
+    cout<<"testing !!!"<<endl;
     DataReader dr("t");
     StockPool stk_pool;
 

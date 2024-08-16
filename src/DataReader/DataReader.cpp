@@ -62,7 +62,8 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
 // std::string DataReader::m_path = "/Users/liruixiang/quantum_data/";
 // #endif
 
-std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
+// std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
+std::string DataReader::m_path = "/Users/liruixiang/codes/quantum_data/";
 
 int DataReader::m_row_pos = 3;
 int DataReader::m_column_pos = 4;
