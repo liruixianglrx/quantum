@@ -28,10 +28,15 @@ int main() {
     ADFTest::startTest(pst.m_ratio);
     cout<<"IS STATION ???? : "<<ADFTest::isStationary()<<endl;
     
-    auto arr={1.4554,1.4554,1.4553,1.4555,1.4556,1.4554,1.4557,1.4552};
-    ADFTest::startTest(arr);
-    cout<<"IS STATION ???? : "<<ADFTest::isStationary()<<endl;
+    // auto arr={1.4554,1.4554,1.4553,1.4555,1.4556,1.4554,1.4557,1.4552};
+    // ADFTest::startTest(arr);
+    // cout<<"IS STATION ???? : "<<ADFTest::isStationary()<<endl;
 
+    cout<<"Corelations are :";
+    cout<<Statics::correlationCoefficient(stk_pool.getStockByIdx(0)->getDataByDataName("收盘价"),stk_pool.getStockByIdx(2)->getDataByDataName("收盘价"));
+    cout<<endl;
+
+    ADFTest::startTest(stk_pool.getStockByIdx(0)->getDataByDataName("收盘价"));
     callback.setInitialCapital(10000);
     callback.generateSignals();
 

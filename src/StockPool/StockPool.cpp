@@ -31,7 +31,8 @@ void StockPool::addStock(Stock *stk) {
 }
 
 StockPool::~StockPool(){
-    for (auto it :m_stock_pool){
-        delete []it;
-    }
+    // Debug
+    // for (auto it :m_stock_pool){
+    //     delete []it;
+    // }
 }

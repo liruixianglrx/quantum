@@ -82,20 +82,20 @@ bool ADFTest::startTest(const std::vector<double> & arr){
         return false;
     }
 
-    Py_Initialize();
 
     // TODO:当一系列时，每次都要import太耗时
     if (!m_has_inited){
+        Py_Initialize();
         PyRun_SimpleString("import numpy as np");
         PyRun_SimpleString("from statsmodels.tsa.stattools import adfuller");
+        PyRun_SimpleString("import sys");
+        PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
         m_has_inited=true;
     }
 
     PyObject* pModule = NULL;
     PyObject* pFunc = NULL;
     PyObject* pArg = NULL;
-    PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
 
     pModule = PyImport_ImportModule("ADFTest"); 
     pFunc = PyObject_GetAttrString(pModule, "ProcessData");
@@ -103,7 +103,7 @@ bool ADFTest::startTest(const std::vector<double> & arr){
 
     PyObject_Call(pFunc, pArg, NULL);
 
-    Py_Finalize();
+    // Py_Finalize();
 
     if (!waitForPythonCompletion(m_ADFT_result)) {
         std::cout<<"\nADF Test ERROR : NO RESULT\n";
