@@ -14,12 +14,13 @@ private:
     int m_data_len;
 public:
     StockPool(/* args */){};
-    ~StockPool(){};
+    ~StockPool();
     void addStockByCode(const std::string &stk_code);
     Stock *getStockByCode(const std::string &stk_code);
     Stock *getStockByIdx(const int& idx);
     int getDataLen();
     int getStockNum();
+    void addStock(Stock *stk);
 };
 
 #endif // STOCKPOOL_H

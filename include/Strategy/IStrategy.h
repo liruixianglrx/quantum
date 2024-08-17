@@ -7,9 +7,12 @@
 #include "Enum.h"
 class IStrategy {
     public:
-        virtual std::vector<std::vector<Operation>> compute();
-        virtual std::vector<std::string> getDataName(); 
-        void setStockPool(StockPool *s){m_stock_pool = s;}
+        virtual ~IStrategy(){};
+        virtual std::vector<std::vector<Operation>> compute()=0;
+        virtual std::vector<std::string> getDataName() =0; 
+        void setStockPool(StockPool *s);
+        virtual void preCompute()=0;
+
     protected:
         StockPool *m_stock_pool;
 };

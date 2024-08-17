@@ -4,12 +4,7 @@
 #include <string>
 #include <vector>
 
-    std::vector<std::vector<Operation>> PairTradingStrategy::compute() {
-    getRatio();
-    getMean();
-    getStdDeviation();
-    getZScore();
-
+std::vector<std::vector<Operation>> PairTradingStrategy::compute(){
     int days = m_stock_pool->getDataLen();
     std::vector<std::vector<Operation>> signals(2,std::vector<Operation>(days));
     for (int day = 0; day < days; day++) {
@@ -64,4 +59,16 @@ void PairTradingStrategy::getZScore(){
     for (int i=0;i<m_ratio.size();i++) {
         m_zscore.push_back((m_ratio[i]-m_mean) / m_std_dev);
     }
+}
+
+void PairTradingStrategy::setExitPoint(double e){
+    m_exit_point = e;
+}
+
+
+void PairTradingStrategy::preCompute(){
+    getRatio();
+    getMean();
+    getStdDeviation();
+    getZScore();
 }

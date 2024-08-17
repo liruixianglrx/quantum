@@ -10,7 +10,7 @@ def ProcessData(filePath):
     # processed_data = [x * 2 for x in data]
     print("ADF TESTING!!!!!")
     result = adfuller(data,2)
-    print(result)
+    print("ADF result data :",result)
 
     # 修改文件内容，通知C++程序继续执行
     with open(filePath, 'a') as f:

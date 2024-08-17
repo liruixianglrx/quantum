@@ -23,6 +23,6 @@ public:
     int getDataLen();
     std::vector<double> &getDataByDataName(const std::string &data_name);
     Stock(/* args */){};
-    ~Stock();
+    ~Stock(){};
 };
 #endif // STOCK_H

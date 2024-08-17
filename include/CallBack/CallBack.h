@@ -19,7 +19,7 @@ private:
     std::vector<std::vector<Operation>> m_signals;
 
 public:
-    CallBack(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s){};
+    CallBack(StockPool *stk_pool,IStrategy *s);
     void generateSignals();
     std::vector<std::vector<Operation>>& getSignals();
     void setInitialCapital(double c);
