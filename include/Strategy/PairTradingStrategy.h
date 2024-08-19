@@ -10,7 +10,7 @@ class PairTradingStrategy:public IStrategy {
         std::vector<std::vector<Operation>> compute() override;
         std::vector<std::string> getDataName() override;
         void setExitPoint(double e);
-        void preCompute();
+        void preCompute() override;
         std::vector<double> m_ratio;
 
     private:

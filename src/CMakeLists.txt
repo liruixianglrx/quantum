@@ -21,7 +21,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}  OpenXLSX::OpenXLSX)
 if(UNIX AND NOT APPLE)
     target_link_libraries(${CMAKE_PROJECT_NAME}  /home/lrx/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
 elseif(APPLE)
-    target_link_libraries(${CMAKE_PROJECT_NAME}  /Users/liruixiang/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+    target_link_libraries(${CMAKE_PROJECT_NAME}  /Users/liruixiang/codes/quantum/lib/python3.12/libpython3.12.dylib)
 endif()
 
 # target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${HEADER_DIRS})

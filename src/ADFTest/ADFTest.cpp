@@ -87,9 +87,15 @@ bool ADFTest::startTest(const std::vector<double> & arr){
     if (!m_has_inited){
         Py_Initialize();
         PyRun_SimpleString("import numpy as np");
-        PyRun_SimpleString("from statsmodels.tsa.stattools import adfuller");
         PyRun_SimpleString("import sys");
+        PyRun_SimpleString("sys.path.append('/Users/liruixiang/quantum_env/lib/python3.12/site-packages')");
+        // PyRun_SimpleString("from statsmodels.tsa.stattools import adfuller");
+        PyRun_SimpleString("import statsmodels");
+        #ifdef __linux__
         PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/ADFTest')");
+        #elif __APPLE__
+        PyRun_SimpleString("sys.path.append('/Users/liruixiang/codes/quantum/src/ADFTest')");
+        #endif
         m_has_inited=true;
     }
 
@@ -100,6 +106,9 @@ bool ADFTest::startTest(const std::vector<double> & arr){
     pModule = PyImport_ImportModule("ADFTest"); 
     pFunc = PyObject_GetAttrString(pModule, "ProcessData");
     pArg = Py_BuildValue("(s)", m_data_file.c_str()); 
+    // pModule = PyImport_ImportModule("mytest"); 
+    // pFunc = PyObject_GetAttrString(pModule, "Hello");
+    // pArg = Py_BuildValue("(s)", m_data_file.c_str()); 
 
     PyObject_Call(pFunc, pArg, NULL);
 
@@ -124,7 +133,15 @@ void ADFTest::setPValue(double p) {
 }
 // python D:/coding/codes/quantum/src/ADFTest/ADFTest.py
 
+//init
+#ifdef _WIN32
+std::string DataReader::m_path = "D:/coding/codes/quantum/src/ADFTest/data.txt";
+#elif __APPLE__
+std::string ADFTest::m_data_file = "/Users/liruixiang/codes/quantum/src/ADFTest/data.txt";
+#elif __linux__
 std::string ADFTest::m_data_file = "/home/lrx/codes/quantum/src/ADFTest/data.txt";
+#endif
+
 std::string ADFTest::m_data_start_flag = "DATA_START";
 std::string ADFTest::m_completion_flag = "PROCESSING_COMPLETE";
 std::vector <std::string> ADFTest::m_ADFT_result{};
