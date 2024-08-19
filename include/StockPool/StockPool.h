@@ -11,23 +11,16 @@ private:
     // std::unordered_map<std::string,Stock*> m_stock_pool;
     std::vector<Stock*> m_stock_pool;
     std::unordered_map<std::string,int> m_code_idx_mapping;
-    int m_data_len;
+    int m_data_len=0;
 public:
     StockPool(/* args */){};
-    ~StockPool(){};
+    ~StockPool();
     void addStockByCode(const std::string &stk_code);
     Stock *getStockByCode(const std::string &stk_code);
     Stock *getStockByIdx(const int& idx);
     int getDataLen();
     int getStockNum();
+    void addStock(Stock *stk);
 };
-
-// StockPool::StockPool(/* args */)
-// {
-// }
-
-// StockPool::~StockPool()
-// {
-// }
 
 #endif // STOCKPOOL_H

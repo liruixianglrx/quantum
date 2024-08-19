@@ -5,7 +5,6 @@ DataReader::DataReader(const std::string &file_name){
     // setTimePos("D2");
     // setRowPos(2);
     m_path += file_name+".xlsx";
-    // /Users/liruixiang/quantum/src/t.xlsx
     m_doc.open(m_path);
 }
 
@@ -22,6 +21,7 @@ void DataReader::setStartPos(const int row_pos,const int column_pos){
 void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *stk_pool){
     auto wks = m_doc.workbook().worksheet(work_sheet);
     
+    auto end = wks.rowCount() -2;
     for (auto &row : wks.rows(m_row_pos,wks.rowCount() -2)) {
         Stock *stock;
 
@@ -62,7 +62,8 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
 // std::string DataReader::m_path = "/Users/liruixiang/quantum_data/";
 // #endif
 
-std::string DataReader::m_path = "/home/lrx/codes/quantum_data";
+// std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum_data/";
+std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
 
 int DataReader::m_row_pos = 3;
 int DataReader::m_column_pos = 4;

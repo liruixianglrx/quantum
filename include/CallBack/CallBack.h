@@ -5,6 +5,7 @@
 // #include <vector>
 #include "StockPool.h"
 #include "IStrategy.h"
+#include "Enum.h"
 #include <vector>
 /* Write your declarations here */
 class CallBack
@@ -12,15 +13,16 @@ class CallBack
 private:
     StockPool *m_stk_pool;
     IStrategy *m_stratege;
-    std::vector<std::string> m_data_name;
+    double m_capital;
     // std::vector<int> m_op_stockidx;
     //买序号为idx，date的stock
-    std::vector<std::vector<bool>> m_buy_stockidx_date;
+    std::vector<std::vector<Operation>> m_signals;
 
 public:
-    CallBack(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s){};
+    CallBack(StockPool *stk_pool,IStrategy *s);
     void generateSignals();
-    std::vector<std::vector<bool>>& getSignals();
+    std::vector<std::vector<Operation>>& getSignals();
+    void setInitialCapital(double c);
 };
 
 #endif // CALLBACK_H

@@ -1,3 +1,7 @@
+<!-- 依赖库 -->
+sudo apt-get install libblas-dev liblapack-dev gfortran为了matplotlib-cpp
+
+
 <!-- this is doc for OpenXLSX -->
 
 <!-- 文件创建 demo1-->

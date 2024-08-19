@@ -1,19 +1,20 @@
 #include "CallBack.h"
+#include "Enum.h"
 
 void CallBack::generateSignals(){
-    m_data_name = m_stratege->getDataName();
-
-    for (int day=0;day<m_stk_pool->getDataLen();day++) {
-        std::vector <double> data_per_day;
-
-        for (int idx=0;idx<m_stk_pool->getStockNum();idx++) {
-            auto datas = m_stk_pool->getStockByIdx(idx)->getDataByDataName(m_data_name[idx]);
-
-            data_per_day.push_back(datas[idx]);
-            
-        } 
-    }
+    // m_stratege->setStockPool(m_stk_pool);
+    m_signals = m_stratege->compute();
 }
-std::vector<std::vector<bool>>& CallBack::getSignals(){
 
+std::vector<std::vector<Operation>>& CallBack::getSignals(){
+    return m_signals;
+}
+
+void CallBack::setInitialCapital(double c){
+    m_capital = c;
+}
+
+CallBack::CallBack(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s){
+    m_stratege->setStockPool(m_stk_pool);
+    m_stratege->preCompute();
 }

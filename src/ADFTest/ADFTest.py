@@ -10,7 +10,7 @@ def ProcessData(filePath):
     # processed_data = [x * 2 for x in data]
     print("ADF TESTING!!!!!")
     result = adfuller(data,2)
-    print(result)
+    print("ADF result data :",result)
 
     # 修改文件内容，通知C++程序继续执行
     with open(filePath, 'a') as f:
@@ -24,10 +24,3 @@ def ProcessData(filePath):
 def Hello(s):
     print("hello man")
     print(s)
-
-
-ProcessData("./data.txt")
-# if __name__ == "__main__":
-#     data_file = "D:/coding/codes/quantum/src/ADFTest/data.txt"
-#     process_data(data_file)
-#     print("Python processing complete. Flag written to file.")

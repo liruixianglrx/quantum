@@ -24,3 +24,15 @@ if (m_data_len == 0) {
 int StockPool::getStockNum(){
     return m_stock_pool.size();
 }
+
+void StockPool::addStock(Stock *stk) {
+    m_stock_pool.push_back(stk);
+    m_code_idx_mapping[stk->m_stock_code]=m_stock_pool.size()-1;
+}
+
+StockPool::~StockPool(){
+    // Debug
+    // for (auto it :m_stock_pool){
+    //     delete []it;
+    // }
+}
