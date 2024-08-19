@@ -2,7 +2,7 @@ import numpy as np
 from statsmodels.tsa.stattools import adfuller
 
 def ProcessData(filePath):
-    print(filePath)
+    # print(filePath)
     with open(filePath, 'r') as f:
         data = [float(line.strip()) for line in f]
     

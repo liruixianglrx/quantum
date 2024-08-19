@@ -1,5 +1,5 @@
 #include "ADFTest.h"
-#include <Python.h>
+#include "Python.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -84,6 +84,7 @@ bool ADFTest::startTest(const std::vector<double> & arr){
 
 
     // TODO:当一系列时，每次都要import太耗时
+    // TODO:PYTHON解释器类
     if (!m_has_inited){
         Py_Initialize();
         PyRun_SimpleString("import numpy as np");

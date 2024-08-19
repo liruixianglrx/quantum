@@ -46,10 +46,19 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
         std::string data_name = (start_value + m_row_pos -1)->getString();
 
         start_value = start_value + m_row_pos;
+
+        int idx=0;
         //股票数据录入
+        std::string price;
         for (auto it = start_value;it != read_values.end(); it++) {
-            auto price = it->getString();
-            stock->addNewData(data_name,std::stod(it->getString()));
+            //for debuging
+            // auto price = it->getString();
+            // idx++;
+
+            if (it->getString() != "#DIV/0!") {
+                price = it->getString();
+            }
+            stock->addNewData(data_name,std::stod(price));
         }
 
     }
@@ -61,7 +70,8 @@ std::string DataReader::m_path = "D:/coding/codes/quantum_data/";
 #elif __APPLE__
 std::string DataReader::m_path = "/Users/liruixiang/codes/quantum_data/";
 #elif __linux__
-std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
+// std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
+std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum_data/";
 #endif
 
 // std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum_data/";
