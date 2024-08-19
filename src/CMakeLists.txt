@@ -18,7 +18,11 @@ add_executable(${CMAKE_PROJECT_NAME} ${SRC_LIST})
 
 #add lib
 target_link_libraries(${CMAKE_PROJECT_NAME}  OpenXLSX::OpenXLSX)
-target_link_libraries(${CMAKE_PROJECT_NAME}  /home/lrx/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+if(UNIX AND NOT APPLE)
+    target_link_libraries(${CMAKE_PROJECT_NAME}  /home/lrx/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+elseif(APPLE)
+    target_link_libraries(${CMAKE_PROJECT_NAME}  /Users/liruixiang/codes/quantum/lib/python3.12/libpython3.12.so.1.0)
+endif()
 
 # target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${HEADER_DIRS})
 
@@ -34,6 +38,6 @@ get_target_property(INCLUDE_DIRS ${CMAKE_PROJECT_NAME} INCLUDE_DIRECTORIES)
 
 # 打印 include_directories
 # message(STATUS "Include directories for target ${CMAKE_PROJECT_NAME}: ${INCLUDE_DIRS}")
-
+message(STATUS "os is ${CMAKE_SYSTEM_NAME}")
 # 打印 src_directories
 # message(STATUS "Src directories for target ${CMAKE_PROJECT_NAME}: ${SRC_LIST}")
