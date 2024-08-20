@@ -18,7 +18,7 @@ class PairTradingStrategy:public IStrategy {
         void getRatio();
         void getMean();
         void getStdDeviation();
-        void getZScore();
+        void getZScore(int window_size=30);
         double m_mean;
         double m_std_dev;
         double m_exit_point;

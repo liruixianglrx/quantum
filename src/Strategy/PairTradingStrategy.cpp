@@ -55,10 +55,24 @@ void PairTradingStrategy::getStdDeviation(){
     m_std_dev = Statics::standardDeviation(m_ratio);
 }
 
-void PairTradingStrategy::getZScore(){
-    for (int i=0;i<m_ratio.size();i++) {
-        m_zscore.push_back((m_ratio[i]-m_mean) / m_std_dev);
+void PairTradingStrategy::getZScore(int window_size){
+    // for (int i=0;i<m_ratio.size();i++) {
+    //     m_zscore.push_back((m_ratio[i]-m_mean) / m_std_dev);
+    // }
+    double mean;
+    double std;
+    for (int i=0;i<m_ratio.size()-window_size;i++) {
+        mean = Statics::mean(std::vector<double> (m_ratio.begin()+i,m_ratio.begin()+i+window_size));
+        std =  Statics::standardDeviation(std::vector<double> (m_ratio.begin()+i,m_ratio.begin()+i+window_size));
+        m_zscore.push_back((m_ratio[i]-mean) / std);
     }
+
+    for (int i=m_ratio.size()-window_size;i<m_ratio.size();i++) {
+        mean = Statics::mean(std::vector<double> (m_ratio.end()-window_size,m_ratio.end()));
+        std =  Statics::standardDeviation(std::vector<double> (m_ratio.begin()+i,m_ratio.begin()+i+window_size));
+        m_zscore.push_back((m_ratio[i]-mean) / std);
+    }
+    
 }
 
 void PairTradingStrategy::setExitPoint(double e){

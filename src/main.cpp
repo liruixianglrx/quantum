@@ -30,6 +30,7 @@ int main() {
     cout<<"\033[31m IS STATION ???? : \033[0m"<<ADFTest::isStationary()<<endl;
     plot::plotYValue(pst.m_ratio);
     plot::plotYValue(pst.m_zscore);
+    // plot::plotRolling(pst.m_zscore,30);
 
     cout<<"Corelations are :";
     cout<<Statics::correlationCoefficient(stk_pool.getStockByIdx(0)->getDataByDataName("收盘价"),stk_pool.getStockByIdx(2)->getDataByDataName("收盘价"));
