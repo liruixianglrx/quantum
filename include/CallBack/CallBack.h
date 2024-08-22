@@ -23,6 +23,7 @@ public:
     void generateSignals();
     std::vector<std::vector<Operation>>& getSignals();
     void setInitialCapital(double c);
+    std::vector<double> computeProfit();
 };
 
 #endif // CALLBACK_H

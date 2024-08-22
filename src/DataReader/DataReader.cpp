@@ -70,8 +70,8 @@ std::string DataReader::m_path = "D:/coding/codes/quantum/quantum_data/";
 #elif __APPLE__
 std::string DataReader::m_path = "/Users/liruixiang/codes/quantum/quantum_data/";
 #elif __linux__
-// std::string DataReader::m_path = "/home/lrx/codes/quantum_data/";
-std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum/quantum_data/";
+std::string DataReader::m_path = "/home/lrx/codes/quantum/quantum_data/";
+// std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum/quantum_data/";
 #endif
 
 // std::string DataReader::m_path = "/media/lrx/新加卷1/coding/codes/quantum_data/";

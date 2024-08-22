@@ -3,6 +3,13 @@
 enum Operation{
     HOLD,
     BUY,
-    SELL
+    SELL,
+    LIQUID
+};
+
+enum Position {
+    GoLong,
+    GoShort,
+    Empty
 };
 #endif // ENUM_H

@@ -15,8 +15,8 @@ std::vector<std::vector<Operation>> PairTradingStrategy::compute(){
         }
 
         if (m_pos_has != -1 && m_zscore[day] <= 0) {
-            signals[0][day] = BUY;
-            signals[1][day] = SELL;
+            signals[0][day] = LIQUID;
+            signals[1][day] = LIQUID;
             m_pos_has = -1;
         }
 
@@ -27,8 +27,8 @@ std::vector<std::vector<Operation>> PairTradingStrategy::compute(){
         }
 
         if (m_neg_has != -1 && m_zscore[day] >= 0) {
-            signals[0][day] = SELL;
-            signals[1][day] = BUY;
+            signals[0][day] = LIQUID;
+            signals[1][day] = LIQUID;
             m_neg_has = -1;
         }
     }
@@ -49,16 +49,13 @@ void PairTradingStrategy::getRatio(){
     }
 }
 void PairTradingStrategy::getMean(){
-    m_mean = Statics::mean(m_ratio);
+    m_ration_mean = Statics::mean(m_ratio);
 }
 void PairTradingStrategy::getStdDeviation(){
     m_std_dev = Statics::standardDeviation(m_ratio);
 }
 
 void PairTradingStrategy::getZScore(int window_size){
-    // for (int i=0;i<m_ratio.size();i++) {
-    //     m_zscore.push_back((m_ratio[i]-m_mean) / m_std_dev);
-    // }
     double mean;
     double std;
     for (int i=0;i<m_ratio.size()-window_size;i++) {
