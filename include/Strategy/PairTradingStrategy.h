@@ -9,8 +9,10 @@ class PairTradingStrategy:public IStrategy {
     public:
         std::vector<std::vector<Operation>> compute() override;
         std::vector<std::string> getDataName() override;
-        void setExitPoint(double e);
         void preCompute() override;
+        void setExitPoint(double e);
+        // double get_ratio_mean(){return m_ration_mean;};
+        double m_ration_mean;
         std::vector<double> m_ratio;
         std::vector<double> m_zscore;
 
@@ -19,7 +21,6 @@ class PairTradingStrategy:public IStrategy {
         void getMean();
         void getStdDeviation();
         void getZScore(int window_size=30);
-        double m_mean;
         double m_std_dev;
         double m_exit_point;
         // std::vector<double> m_zscore;
@@ -27,6 +28,7 @@ class PairTradingStrategy:public IStrategy {
 
         //当ratio大于exit_point时，记录day至m_pos_has，如果没有建立头寸则为-1;
         int m_pos_has=-1,m_neg_has=-1;
+        // double m_ration_mean;
 };
 
 #endif //PAIRTRADINGSTRATEGY
