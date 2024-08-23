@@ -12,13 +12,13 @@ using namespace OpenXLSX;
 using namespace std;
 
 int main() {
-    DataReader dr("exchange pairs");
+    DataReader dr("riyuan");
     StockPool stk_pool;
     
-    dr.readDataFromWorksheet("Sheet1",&stk_pool);
+    dr.readDataFromWorksheet("历史行情",&stk_pool);
 
     StockPool stk_pool2;
-    stk_pool2.addStock(stk_pool.getStockByIdx(0));
+    stk_pool2.addStock(stk_pool.getStockByIdx(1));
     stk_pool2.addStock(stk_pool.getStockByIdx(2));
     // TODO:STOCK selector
  
@@ -26,8 +26,8 @@ int main() {
     pst.setExitPoint(1.5);
     auto &data = stk_pool2.getStockByIdx(1)->getDataByDataName("收盘价");
     for (int idx=0;idx < stk_pool2.getStockByIdx(1)->getDataLen();idx++) {
-        if (data[idx] > 2) {
-            cout<<"idx "<<idx <<endl;
+        if (data[idx] < 0.3) {
+            cout<<"idx1 "<<idx <<endl;
             data[idx] = data[idx-1];
         }
     }
@@ -35,7 +35,7 @@ int main() {
     auto &data2 = stk_pool2.getStockByIdx(0)->getDataByDataName("收盘价");
     for (int idx=0;idx < stk_pool2.getStockByIdx(1)->getDataLen();idx++) {
         if (data2[idx]< 0.3) {
-            cout<<"idx "<<idx <<endl;
+            cout<<"idx2"<<idx <<endl;
             data2[idx] = data2[idx-1];
         }
     }
@@ -84,10 +84,10 @@ int main() {
     //     }
     // }
     auto ans = callback.computeProfit();
-    // for (auto it: ans)
-    // {
-    //     cout<<it <<" ";
-    // }
-    // cout<<endl;
+    for (auto it: ans)
+    {
+        cout<<it <<" ";
+    }
+    cout<<endl;
     return 0;
 }
