@@ -10,7 +10,9 @@ class PairTradingStrategy:public IStrategy {
         std::vector<std::vector<Operation>> compute() override;
         std::vector<std::string> getDataName() override;
         void preCompute() override;
+        void setEnterPoint(double e);
         void setExitPoint(double e);
+
         // double get_ratio_mean(){return m_ration_mean;};
         double m_ration_mean;
         std::vector<double> m_ratio;
@@ -22,6 +24,7 @@ class PairTradingStrategy:public IStrategy {
         void getStdDeviation();
         void getZScore(int window_size=30);
         double m_std_dev;
+        double m_enter_point;
         double m_exit_point;
         // std::vector<double> m_zscore;
         // std::vector<std::string> m_data_name;

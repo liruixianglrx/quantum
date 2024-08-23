@@ -62,22 +62,19 @@ std::vector<double> CallBack::computeProfit(){
             auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[idx];
             auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[idx];
 
-            if (cur_position[0] > 0){
-                m_capital = m_capital + cur_position[0] * price1;
-                m_capital = m_capital + cur_position[1] * price2;
-            } else {
-                m_capital = m_capital + cur_position[0] * price1;
-                m_capital = m_capital + cur_position[1] * price2;
-            }
+            m_capital = m_capital + cur_position[0] * price1;
+            m_capital = m_capital + cur_position[1] * price2;
 
             cur_position[0]=cur_position[1]=0;
         } 
 
         ans.push_back(m_capital);
     }
+
+
     if (cur_position[0] != 0) {
-        auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen()];
-        auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen()];
+        auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen() -1];
+        auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen() -1];
         m_capital = m_capital + cur_position[0] * price1;
         m_capital = m_capital + cur_position[1] * price2;
         cur_position[0]=cur_position[1]=0;

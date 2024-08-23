@@ -132,6 +132,10 @@ bool ADFTest::isStationary(){
 void ADFTest::setPValue(double p) {
     m_pvalue = p;
 }
+
+ std::string ADFTest::getResultByIndex(int idx){
+    return m_ADFT_result[idx];
+ }
 // python D:/coding/codes/quantum/src/ADFTest/ADFTest.py
 
 //init

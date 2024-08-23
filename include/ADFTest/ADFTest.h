@@ -32,6 +32,7 @@ public:
 
     static void setPValue(double p);
     static bool startTest(const std::vector<double> & arr);
+    static std::string getResultByIndex(int idx);
 };
 
 #endif // ADFTEST_H
