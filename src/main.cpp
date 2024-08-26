@@ -19,9 +19,9 @@ int main() {
     
     dr.readDataFromWorksheet("历史行情",&stk_pool);
 
-    std::vector<pair<std::string,double> > ans_all;
-    for (int i=0;i<4;i++){
-        for (int j=i+1;j<4;j++) {
+    std::vector<std::string> ans_all;
+    for (int i=0;i<stk_pool.getStockNum();i++){
+        for (int j=i+1;j<stk_pool.getStockNum();j++) {
         StockPool stk_pool2;
         stk_pool2.addStock(stk_pool.getStockByIdx(i));
         stk_pool2.addStock(stk_pool.getStockByIdx(j));
@@ -68,15 +68,13 @@ int main() {
 
         // cout <<"\033[31m Final Capital is  \033[0m "<<ans[ans.size()]<<endl;
         auto final_cap = std::move(ans[ans.size()-1]) ;
-        ans_all.push_back(make_pair(ADFTest::getResultByIndex(1),final_cap));
+        // ans_all.push_back(make_pair(ADFTest::getResultByIndex(1),final_cap));
+        callback.m_callBackResult.cointergration = ADFTest::getResultByIndex(1);
+        ans_all.push_back(callback.printResult());
         }
     }
 
-    for (int idx =0 ;idx <ans_all.size();idx++) {
-        double y = ans_all[idx].second / 10000;
-        double roe = pow(y,0.1) - 1;
-        cout<<"\033[31m cointergration is :"<< ans_all[idx].first<<" Final Capital is :"<<ans_all[idx].second<<" ROE is :"<<roe <<endl;
-    }
-        cout<<"\033[0m ";
+    for (auto &it:ans_all)
+        cout<<it;
     return 0;
 }

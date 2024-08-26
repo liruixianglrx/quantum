@@ -88,5 +88,5 @@ void PairTradingStrategy::preCompute(){
     getRatio();
     getMean();
     getStdDeviation();
-    getZScore();
+    getZScore(30);
 }
