@@ -7,7 +7,7 @@
 class PairTradingStrategy:public IStrategy {
     // TODO：止损点
     public:
-        std::vector<std::vector<Operation>> compute() override;
+        std::vector<std::vector<Operation>> computeSignals() override;
         std::vector<std::string> getDataName() override;
         void preCompute() override;
         void setEnterPoint(double e);

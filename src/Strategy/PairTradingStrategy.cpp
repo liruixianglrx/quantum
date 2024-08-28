@@ -4,36 +4,37 @@
 #include <string>
 #include <vector>
 
-std::vector<std::vector<Operation>> PairTradingStrategy::compute(){
+std::vector<std::vector<Operation>> PairTradingStrategy::computeSignals(){
     int days = m_stock_pool->getDataLen();
-    std::vector<std::vector<Operation>> signals(2,std::vector<Operation>(days));
+    // std::vector<std::vector<Operation>> signals(2,std::vector<Operation>(days));
+    m_signals.resize(2,std::vector<Operation>(days));
     for (int day = 0; day < days; day++) {
         if  (m_zscore[day] > m_enter_point) {
-            signals[0][day] = SELL;
-            signals[1][day] = BUY;
+            m_signals[0][day] = SELL;
+            m_signals[1][day] = BUY;
             m_pos_has = day;
         }
 
         if (m_pos_has != -1 && m_zscore[day] <= m_exit_point) {
-            signals[0][day] = LIQUID;
-            signals[1][day] = LIQUID;
+            m_signals[0][day] = LIQUID;
+            m_signals[1][day] = LIQUID;
             m_pos_has = -1;
         }
 
         if  (m_zscore[day] < -1*m_enter_point) {
-            signals[0][day] = BUY;
-            signals[1][day] = SELL;
+            m_signals[0][day] = BUY;
+            m_signals[1][day] = SELL;
             m_neg_has = day;
         }
 
         if (m_neg_has != -1 && m_zscore[day] >= -1* m_exit_point) {
-            signals[0][day] = LIQUID;
-            signals[1][day] = LIQUID;
+            m_signals[0][day] = LIQUID;
+            m_signals[1][day] = LIQUID;
             m_neg_has = -1;
         }
     }
 
-    return signals;
+    return m_signals;
 }
 
 std::vector<std::string> PairTradingStrategy::getDataName(){
@@ -73,7 +74,6 @@ void PairTradingStrategy::getZScore(int window_size){
     //     std =  Statics::standardDeviation(std::vector<double> (m_ratio.begin()+i,m_ratio.begin()+i+window_size));
     //     m_zscore.push_back((m_ratio[i]-mean) / std);
     // }
-    
 }
 
 void PairTradingStrategy::setExitPoint(double e){
