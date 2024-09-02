@@ -24,7 +24,6 @@ private:
     IStrategy *m_stratege;
     double m_capital,m_init_capital;
     double m_max_pullback=0;
-    // std::vector<int> m_op_stockidx;
     //买序号为idx，date的stock
     std::vector<std::vector<Operation>> m_signals;
     double getRealtimeCapital(int idx);
@@ -35,10 +34,11 @@ public:
     std::vector<std::vector<Operation>>& getSignals();
     void setInitialCapital(double c);
     std::vector<double> computeProfit();
-    std::vector<int> cur_position;
+    std::string printResult();
+
+    std::vector<int> m_cur_position;
     std::vector<double> m_realtime_capital;
     CallBackResult m_callBackResult;
-    std::string printResult();
 };
 
 #endif // CALLBACK_H

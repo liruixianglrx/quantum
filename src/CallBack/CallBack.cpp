@@ -1,12 +1,13 @@
 #include "CallBack.h"
 #include "Enum.h"
-#include <assert.h>
 #include <iostream>
 //todo:computeProfit完成后删掉这个头文件
 #include "PairTradingStrategy.h"
+#include <cmath>
 
 void CallBack::generateSignals(){
-    m_signals = m_stratege->computeSignals();
+    m_stratege->computeSignals();
+    m_signals = m_stratege->getSignals();
 }
 
 std::vector<std::vector<Operation>>& CallBack::getSignals(){
@@ -21,63 +22,28 @@ void CallBack::setInitialCapital(double c){
 CallBack::CallBack(StockPool *stk_pool,IStrategy *s):m_stk_pool(stk_pool),m_stratege(s),m_callBackResult(){
     m_stratege->setStockPool(m_stk_pool);
     m_stratege->preCompute();
-    cur_position.resize(2);
-    cur_position[0]=cur_position[1]=0;
+    m_cur_position.resize(m_stk_pool->getStockNum());
+    for (auto idx = 0;idx < m_cur_position.size();idx++) {
+        m_cur_position[idx] = 0;
+    }
 }
 
-double CallBack::getRealtimeCapital(int idx){
-    auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[idx];
-    auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[idx];
-    double tmp;
-    tmp = m_capital + cur_position[0] * price1;
-    tmp = tmp + cur_position[1] * price2;
-
-    return tmp;
+double CallBack::getRealtimeCapital(int day){
+    double tmpCapital=m_capital;
+    for (int idx=0;idx < m_stk_pool->getStockNum(); idx++) {
+        auto price = m_stk_pool->getStockByIdx(idx)->getDataByDataName("收盘价")[idx];
+        tmpCapital  = tmpCapital + m_cur_position[idx] * price; 
+    }
+    return tmpCapital;
  }
 
 std::vector<double> CallBack::computeProfit(){
     //todo : 应该在stategy里面有个成员函数，类型为函数指针
     std::vector<double> ans;
-    auto pstrategy = dynamic_cast<PairTradingStrategy*>(m_stratege);
+    // auto pstrategy = dynamic_cast<PairTradingStrategy*>(m_stratege);
     for (int day = 0;day < m_signals[0].size();day++) {
-        // if (m_signals[0][day] == BUY && cur_position[0] <= 0) {
-        //     // static_assert(cur_position[0] <= 0);
-        //     assert(cur_position[0] <= 0);
-        //     auto capital1 = m_capital * pstrategy->m_ration_mean/(1+ pstrategy->m_ration_mean);
-        //     auto capital2 = m_capital - capital1;
+        m_stratege->callbackByDay(m_signals,m_cur_position,m_capital,day);
 
-        //     auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
-        //     auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
-        //     cur_position[0] = (capital1 / price1);
-        //     cur_position[1] = -1 * (capital2 / price2);
-
-        //     m_capital = m_capital - cur_position[0] * price1;
-        //     m_capital = m_capital - cur_position[1] * price2;
-        // }
-        // else if (m_signals[0][day] == SELL and cur_position[0] >= 0) {
-        //     // static_assert(cur_position[0] <= 0);
-        //     assert(cur_position[0] >= 0);
-        //     auto capital1 = m_capital * pstrategy->m_ration_mean/(1+ pstrategy->m_ration_mean);
-        //     auto capital2 = m_capital - capital1;
-
-        //     auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
-        //     auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
-        //     cur_position[0] = -1 *(capital1 / price1);
-        //     cur_position[1] = (capital2 / price2);
-
-        //     m_capital = m_capital - cur_position[0] * price1;
-        //     m_capital = m_capital - cur_position[1] * price2;
-        // }
-        // else if(m_signals[0][day] == LIQUID) {
-        //     auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
-        //     auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
-
-        //     m_capital = m_capital + cur_position[0] * price1;
-        //     m_capital = m_capital + cur_position[1] * price2;
-
-        //     cur_position[0]=cur_position[1]=0;
-        // } 
-        
         ans.push_back(m_capital);
         auto tmp = getRealtimeCapital(day);
         if (tmp < m_init_capital) {
@@ -88,13 +54,8 @@ std::vector<double> CallBack::computeProfit(){
         }
     }
 
-
-    if (cur_position[0] != 0) {
-        auto price1 = m_stk_pool->getStockByIdx(0)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen() -1];
-        auto price2 = m_stk_pool->getStockByIdx(1)->getDataByDataName("收盘价")[m_stk_pool->getStockByIdx(0)->getDataLen() -1];
-        m_capital = m_capital + cur_position[0] * price1;
-        m_capital = m_capital + cur_position[1] * price2;
-        cur_position[0]=cur_position[1]=0;
+    if (m_cur_position[0] != 0) {
+        m_capital = getRealtimeCapital(m_signals[0].size());
     }
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
@@ -105,5 +66,4 @@ std::vector<double> CallBack::computeProfit(){
 
 std::string CallBack::printResult(){
     return "\033[31m cointergration is :"+ m_callBackResult.cointergration+" Final Capital is :"+ std::to_string(m_callBackResult.final_cap)+" ROE is :"+std::to_string(m_callBackResult.roe)+" MAX pullback "+std::to_string(m_callBackResult.max_pullback) +"\033[0m \n";
-    // std::cout<<"\033[31m cointergration is :"<< m_callBackResult.cointergration<<" Final Capital is :"<<m_callBackResult.final_cap<<" ROE is :"<<m_callBackResult.roe<<" MAX pullback "<<m_callBackResult.max_pullback <<"\033[0m "<<std::endl;
 }

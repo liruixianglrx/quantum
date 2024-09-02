@@ -28,7 +28,7 @@ int main() {
         // TODO:STOCK selector
     
         PairTradingStrategy pst;
-        pst.setEnterPoint(2);
+        pst.setEnterPoint(2.5);
         pst.setExitPoint(0);
         auto &data = stk_pool2.getStockByIdx(1)->getDataByDataName("收盘价");
         for (int idx=0;idx < stk_pool2.getStockByIdx(1)->getDataLen();idx++) {
@@ -49,26 +49,14 @@ int main() {
 
         ADFTest::startTest(pst.m_ratio);
         cout<<"\033[31m IS STATION ???? : \033[0m"<<ADFTest::isStationary()<<endl;
-        // plot::plotYValue(pst.m_ratio);
-        // plot::plotYValue(pst.m_zscore);
 
         cout<<"Corelations are :";
         cout<<Statics::correlationCoefficient(stk_pool.getStockByIdx(i)->getDataByDataName("收盘价"),stk_pool.getStockByIdx(j)->getDataByDataName("收盘价"));
         cout<<endl;
-
-        // ADFTest::startTest(stk_pool.getStockByIdx(0)->getDataByDataName("收盘价"));
         callback.setInitialCapital(10000);
         callback.generateSignals();
         auto ans = callback.computeProfit();
-        // for (auto it: ans)
-        // {
-        //     cout<<it <<" ";
-        // }
-        // cout<<endl;
-
-        // cout <<"\033[31m Final Capital is  \033[0m "<<ans[ans.size()]<<endl;
         auto final_cap = std::move(ans[ans.size()-1]) ;
-        // ans_all.push_back(make_pair(ADFTest::getResultByIndex(1),final_cap));
         callback.m_callBackResult.cointergration = ADFTest::getResultByIndex(1);
         ans_all.push_back(callback.printResult());
         }

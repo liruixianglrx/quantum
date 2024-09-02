@@ -3,13 +3,14 @@
 
 #include "IStrategy.h"
 #include "StockPool.h"
-#include <vector>
+#include <vector> 
 class PairTradingStrategy:public IStrategy {
     // TODO：止损点
     public:
-        std::vector<std::vector<Operation>> computeSignals() override;
+        void computeSignals() override;
         std::vector<std::string> getDataName() override;
         void preCompute() override;
+        void callbackByDay(std::vector<std::vector<Operation>> &signals,std::vector<int> &cur_pos,double &capital,int day) override;
         void setEnterPoint(double e);
         void setExitPoint(double e);
 
@@ -17,18 +18,16 @@ class PairTradingStrategy:public IStrategy {
         double m_ration_mean;
         std::vector<double> m_ratio;
         std::vector<double> m_zscore;
-        std::vector<double> m_realtime_capital;
 
     private:
         void getRatio();
         void getMean();
         void getStdDeviation();
-        void getRealtimeCapital();
         void getZScore(int window_size=30);
         double m_std_dev;
         double m_enter_point;
         double m_exit_point;
-        int m_window_size; 
+        int m_window_size;
         // std::vector<double> m_zscore;
         // std::vector<std::string> m_data_name;
 

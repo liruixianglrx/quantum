@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-std::vector<std::vector<Operation>> PairTradingStrategy::computeSignals(){
+void PairTradingStrategy::computeSignals(){
     int days = m_stock_pool->getDataLen();
     // std::vector<std::vector<Operation>> signals(2,std::vector<Operation>(days));
     m_signals.resize(2,std::vector<Operation>(days));
@@ -33,8 +33,6 @@ std::vector<std::vector<Operation>> PairTradingStrategy::computeSignals(){
             m_neg_has = -1;
         }
     }
-
-    return m_signals;
 }
 
 std::vector<std::string> PairTradingStrategy::getDataName(){
@@ -89,4 +87,42 @@ void PairTradingStrategy::preCompute(){
     getMean();
     getStdDeviation();
     getZScore(30);
+}
+
+void PairTradingStrategy::callbackByDay(std::vector<std::vector<Operation>> &signals,std::vector<int> &cur_pos,double &capital,int day) {
+    if (m_signals[0][day] == BUY && cur_pos[0] <= 0) {
+            // static_assert(cur_pos[0] <= 0);
+            auto capital1 = capital * m_ration_mean/(1+ m_ration_mean);
+            auto capital2 = capital - capital1;
+
+            auto price1 = m_stock_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
+            auto price2 = m_stock_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
+            cur_pos[0] = (capital1 / price1);
+            cur_pos[1] = -1 * (capital2 / price2);
+
+            capital = capital - cur_pos[0] * price1;
+            capital = capital - cur_pos[1] * price2;
+        }
+        else if (m_signals[0][day] == SELL and cur_pos[0] >= 0) {
+            // static_assert(cur_pos[0] <= 0);
+            auto capital1 = capital * m_ration_mean/(1+ m_ration_mean);
+            auto capital2 = capital - capital1;
+
+            auto price1 = m_stock_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
+            auto price2 = m_stock_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
+            cur_pos[0] = -1 *(capital1 / price1);
+            cur_pos[1] = (capital2 / price2);
+
+            capital = capital - cur_pos[0] * price1;
+            capital = capital - cur_pos[1] * price2;
+        }
+        else if(m_signals[0][day] == LIQUID) {
+            auto price1 = m_stock_pool->getStockByIdx(0)->getDataByDataName("收盘价")[day];
+            auto price2 = m_stock_pool->getStockByIdx(1)->getDataByDataName("收盘价")[day];
+
+            capital = capital + cur_pos[0] * price1;
+            capital = capital + cur_pos[1] * price2;
+
+            cur_pos[0]=cur_pos[1]=0;
+        } 
 }
