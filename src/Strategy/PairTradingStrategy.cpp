@@ -7,7 +7,7 @@
 void PairTradingStrategy::computeSignals(){
     int days = m_stock_pool->getDataLen();
     // std::vector<std::vector<Operation>> signals(2,std::vector<Operation>(days));
-    m_signals.resize(2,std::vector<Operation>(days));
+    m_signals.resize(2,std::vector<Operation>(days,HOLD));
     for (int day = 0; day < days; day++) {
         if  (m_zscore[day] > m_enter_point) {
             m_signals[0][day] = SELL;
@@ -89,7 +89,7 @@ void PairTradingStrategy::preCompute(){
     getZScore(30);
 }
 
-void PairTradingStrategy::callbackByDay(std::vector<std::vector<Operation>> &signals,std::vector<int> &cur_pos,double &capital,int day) {
+void PairTradingStrategy::callbackByDay(std::vector<int> &cur_pos,double &capital,int day) {
     if (m_signals[0][day] == BUY && cur_pos[0] <= 0) {
             // static_assert(cur_pos[0] <= 0);
             auto capital1 = capital * m_ration_mean/(1+ m_ration_mean);

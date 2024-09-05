@@ -1,16 +1,21 @@
 import numpy as np
+import os
+import contextlib
 from statsmodels.tsa.stattools import adfuller
 
 def ProcessData(filePath):
-    # print(filePath)
     with open(filePath, 'r') as f:
         data = [float(line.strip()) for line in f]
+
+    with open('output.txt', 'w') as f:
+        with contextlib.redirect_stdout(f):
+            print("This will be written to output.txt")
+
+    if os.path.exists('output.txt'):
+        os.remove('output.txt')
     
-    # 假设这里是处理数据的部分
-    # processed_data = [x * 2 for x in data]
-    print("ADF TESTING!!!!!")
     result = adfuller(data,2)
-    print("ADF result data :",result)
+    # print("ADF result data :",result)
 
     # 修改文件内容，通知C++程序继续执行
     with open(filePath, 'a') as f:

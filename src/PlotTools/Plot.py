@@ -18,10 +18,6 @@ def PlotYValue(filePath):
     x = []
     y = []
 
-    print(filePath)
-    print(filePath)
-    print(filePath)
-    print(filePath)
     with open(filePath, "r") as file:
         for line in file:
             values = line.split()

@@ -16,7 +16,7 @@ bool ADFTest::writeArrayToFile(const std::vector<double>& arr){
             outfile << val << "\n";
         }
         outfile.close();
-        std::cout << "Array written to file: " << m_data_file << std::endl;
+        // std::cout << "Array written to file: " << m_data_file << std::endl;
     } else {
         std::cerr << "Unable to open file for writing: " << m_data_file << std::endl;
         return false;
@@ -44,7 +44,7 @@ bool ADFTest::waitForPythonCompletion(std::vector<std::string> &ans){
         }
         infile.close();
         if (completed) {
-            std::cout << "ADF processing complete. Resuming C++ execution." << std::endl;
+            // std::cout << "ADF processing complete. Resuming C++ execution." << std::endl;
             break;
         }
         std::this_thread::sleep_for(std::chrono::seconds(1));  // 每秒检查一次
@@ -58,20 +58,6 @@ void ADFTest::cleanUp(){
         std::perror("Error deleting file"); // 输出错误信息
     }
 }
-
-// std::string exec(const char* cmd) {
-//     std::array<char, 128> buffer;
-//     std::string result;
-//     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
-//     if (!pipe) {
-//         throw std::runtime_error("popen() failed!");
-//     }
-//     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-//         result += buffer.data();
-//     }
-//     return result;
-// }
-
 
 bool ADFTest::startTest(const std::vector<double> & arr){
     cleanUp();
@@ -107,9 +93,6 @@ bool ADFTest::startTest(const std::vector<double> & arr){
     pModule = PyImport_ImportModule("ADFTest"); 
     pFunc = PyObject_GetAttrString(pModule, "ProcessData");
     pArg = Py_BuildValue("(s)", m_data_file.c_str()); 
-    // pModule = PyImport_ImportModule("mytest"); 
-    // pFunc = PyObject_GetAttrString(pModule, "Hello");
-    // pArg = Py_BuildValue("(s)", m_data_file.c_str()); 
 
     PyObject_Call(pFunc, pArg, NULL);
 

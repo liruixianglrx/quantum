@@ -10,7 +10,7 @@ class PairTradingStrategy:public IStrategy {
         void computeSignals() override;
         std::vector<std::string> getDataName() override;
         void preCompute() override;
-        void callbackByDay(std::vector<std::vector<Operation>> &signals,std::vector<int> &cur_pos,double &capital,int day) override;
+        void callbackByDay(std::vector<int> &cur_pos,double &capital,int day) override;
         void setEnterPoint(double e);
         void setExitPoint(double e);
 
