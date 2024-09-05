@@ -3,12 +3,28 @@
 
 #include <iostream>
 
-void ConcurrentPairTradingStrategy::computeSignals(){}
-std::vector<std::string> ConcurrentPairTradingStrategy::getDataName(){}
-void ConcurrentPairTradingStrategy::preCompute(){}
+void ConcurrentPairTradingStrategy::computeSignals(){
+    for (int idx=0;idx<m_pair_idx_mapping.size();idx++) {
+        m_pairs[idx]->computeSignals();
+    }
+
+
+}
+std::vector<std::string> ConcurrentPairTradingStrategy::getDataName(){
+    std::vector<std::string> ans;
+    ans.push_back("收盘价");
+    return ans;
+}
+void ConcurrentPairTradingStrategy::preCompute(){
+    addVaildStrategy();
+}
 void ConcurrentPairTradingStrategy::callbackByDay(std::vector<std::vector<Operation>> &signals,std::vector<int> &cur_pos,double &capital,int day){}
-void ConcurrentPairTradingStrategy::setEnterPoint(double e){}
-void ConcurrentPairTradingStrategy::setExitPoint(double e){}
+void ConcurrentPairTradingStrategy::setEnterPoint(double e){
+    m_enter_point = e;
+}
+void ConcurrentPairTradingStrategy::setExitPoint(double e){
+    m_exit_point = e;
+}
 void ConcurrentPairTradingStrategy::addVaildStrategy(){
     for (int idx1 = 0;idx1 < m_stock_pool->getStockNum(); idx1++) {
         for (int idx2 = idx1+1;idx2 < m_stock_pool->getStockNum();idx2++) {
