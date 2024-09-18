@@ -13,6 +13,7 @@ class PairTradingStrategy:public IStrategy {
         void callbackByDay(std::vector<int> &cur_pos,double &capital,int day) override;
         void setEnterPoint(double e);
         void setExitPoint(double e);
+        std::vector<double> holdSignal(int idx);
 
         // double get_ratio_mean(){return m_ration_mean;};
         double m_ration_mean;

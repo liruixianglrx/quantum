@@ -26,6 +26,8 @@ namespace plot{
         }
         file.close();
 
+        Py_Initialize();
+        PyRun_SimpleString("import sys");
         #ifdef __linux__
         PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/PlotTools')");
         #elif __APPLE__
@@ -39,49 +41,21 @@ namespace plot{
         PyObject_Call(pFunc, pArg, NULL);
         cleanUp();
     }
-
-
-    void plotRolling(const std::vector<double> &y, int window){
+    void plotYValueWithColor(const std::vector<double> &y,const std::vector<double> &color){
         std::vector<double> x;
-        for (int i=0;i<y.size()-window+1;i++) {
+        for (int i=0;i<y.size();i++) {
             x.push_back(i+1);
         }
 
         cleanUp();
-        std::vector<double> averages;  
-        double windowSum = 0.0;
-
-        // 确保window不大于y的大小  
-        if (window > y.size()) {  
-            std::cout << "Error: Window size is larger than the array size." << std::endl;  
-            return ; // 可以选择返回一个空vector或者抛出一个异常  
-        }  
-  
-        // 初始化窗口并计算初始窗口的和  
-        for (int i = 0; i < window; ++i) {  
-            windowSum += y[i];  
-        }  
-
-        // 添加第一个窗口的平均值  
-        averages.push_back(windowSum / window);  
-    
-        // 滑动窗口，更新平均值  
-        for (int i = window; i < y.size(); ++i) {  
-            // 移除窗口最左边的元素  
-            windowSum -= y[i - window];  
-            // 加上新进入窗口的元素  
-            windowSum += y[i];  
-            // 计算新的平均值并添加到结果中  
-            averages.push_back(windowSum / window);  
-        }  
-
         std::ofstream file(m_data_file);
-        
         for (size_t i = 0; i < x.size(); ++i) {
-            file << x[i] << " " << averages[i] << std::endl;
+            file << x[i] << " " << y[i] <<" "<<color[i]<< std::endl;
         }
         file.close();
 
+        Py_Initialize();
+        PyRun_SimpleString("import sys");
         #ifdef __linux__
         PyRun_SimpleString("sys.path.append('/home/lrx/codes/quantum/src/PlotTools')");
         #elif __APPLE__
@@ -90,11 +64,12 @@ namespace plot{
         PyRun_SimpleString("import matplotlib");
 
         PyObject* pModule = PyImport_ImportModule("Plot"); 
-        PyObject* pFunc = PyObject_GetAttrString(pModule, "PlotYValue");
+        PyObject* pFunc = PyObject_GetAttrString(pModule, "PlotYValueWithColor");
         PyObject* pArg = Py_BuildValue("(s)", m_data_file.c_str());
         PyObject_Call(pFunc, pArg, NULL);
         cleanUp();
     }
+
 
     void cleanUp(){
         if (std::remove(m_data_file.c_str()) != 0) {

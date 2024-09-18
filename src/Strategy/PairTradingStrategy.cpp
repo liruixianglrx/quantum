@@ -126,3 +126,31 @@ void PairTradingStrategy::callbackByDay(std::vector<int> &cur_pos,double &capita
             cur_pos[0]=cur_pos[1]=0;
         } 
 }
+
+std::vector<double> PairTradingStrategy::holdSignal(int idx)
+{
+    // debug use delete later
+    std::vector<double>  ans;
+    double signal=0;
+ 
+    // std::vector<double> tmp;
+    bool has_pos=false;
+    for (int day=0;day<getSignals()[idx].size();day++) {
+        if (!has_pos && (getSignals()[idx][day] == BUY || getSignals()[idx][day] == SELL)) {
+            if (getSignals()[idx][day] == BUY ) {
+                signal = 1;
+            } else {
+                signal = -1;
+            }
+            has_pos = true;
+        }
+
+        if (has_pos && getSignals()[idx][day] == LIQUID) {
+            has_pos = false;
+            signal = 0;
+        }
+        ans.push_back(signal) ;
+    }
+    return ans;
+    
+}

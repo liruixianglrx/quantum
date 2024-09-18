@@ -12,7 +12,7 @@ void ConcurrentPairTradingStrategy::computeSignals(){
         m_pairs[idx]->computeSignals();
     }
 
-    // debug use delete later
+    // // debug use delete later
     // for (int i=0;i<m_pairs[0]->getSignals()[0].size();i++) {
     //     std::vector<Operation> tmp;
     //     for (auto &t_stg:m_pairs) {
