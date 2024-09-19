@@ -22,13 +22,24 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
     auto wks = m_doc.workbook().worksheet(work_sheet);
     
     auto end = wks.rowCount() -2;
+
+    // 日期读入
+    auto date_row = wks.row(m_row_pos-1);
+    std::vector<XLCellValue> date_values = date_row.values();
+    for (auto it=date_values.begin()+ m_column_pos - 1;it != date_values.end();it++) {
+        auto type = it->typeAsString();
+        std::string tmp = it->getString();
+        // auto t2 =it->get<std::string>();
+        stk_pool->m_dates.push_back(it->getString());
+    }
+
     for (auto &row : wks.rows(m_row_pos,wks.rowCount() -2)) {
         Stock *stock;
 
         //股票信息录入
         std::vector<XLCellValue> read_values = row.values();
         auto start_value = read_values.begin();
-        auto end_value = start_value + m_row_pos-1;
+        auto end_value = start_value + m_column_pos - 2;
 
         for (auto it = start_value; it != end_value; it++){
             if (it == start_value) {
@@ -43,9 +54,9 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
         }
 
         // 获得股票数据名称
-        std::string data_name = (start_value + m_row_pos -1)->getString();
+        std::string data_name = (start_value + m_column_pos - 2)->getString();
 
-        start_value = start_value + m_row_pos;
+        start_value = start_value + m_column_pos - 1;
 
         int idx=0;
         //股票数据录入

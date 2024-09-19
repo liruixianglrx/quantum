@@ -60,7 +60,8 @@ std::vector<double> CallBack::computeProfit(){
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
     double y = (m_capital / m_init_capital);
-    m_callBackResult.roe = pow(y,0.1) -1;
+    double year = 365.0 / m_stk_pool->getDataLen() ;
+    m_callBackResult.roe = pow(y,year) -1;
     return ans;
 }
 

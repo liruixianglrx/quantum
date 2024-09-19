@@ -1,5 +1,6 @@
 <!-- 依赖库 -->
 sudo apt-get install libblas-dev liblapack-dev gfortran为了matplotlib-cpp
+git 地址 git@github.com:troldal/OpenXLSX.git
 
 
 <!-- this is doc for OpenXLSX -->

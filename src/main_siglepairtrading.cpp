@@ -14,28 +14,36 @@ using namespace OpenXLSX;
 using namespace std;
 
 int main() {
-    DataReader dr("riyuan");
+    DataReader dr("stk_pairtding");
     StockPool stk_pool;
     dr.readDataFromWorksheet("历史行情",&stk_pool);
 
     StockPool stk_pool2;
-    stk_pool2.addStock(stk_pool.getStockByIdx(2));
-    stk_pool2.addStock(stk_pool.getStockByIdx(3));
+    stk_pool2.addStock(stk_pool.getStockByIdx(0));
+    stk_pool2.addStock(stk_pool.getStockByIdx(1));
     PairTradingStrategy pst;
     pst.setEnterPoint(2.5);
     pst.setExitPoint(0);
     CallBack callback(&stk_pool2,&pst);
     callback.setInitialCapital(10000);
     callback.generateSignals();
+
+    auto s = callback.getSignals()[0];
+    auto size = s.size();
+    cout<<"size"<< size<<endl;
+    for (int i=0;i<size;i++){
+        cout<<"idx " <<i <<" "<<stk_pool.m_dates[i]<<" "<< s[i] <<endl;
+    }
+    
     auto ans = callback.computeProfit();
 
     std::vector<double> tmp = stk_pool2.getStockByIdx(0)->getDataByDataName("收盘价");
     tmp.resize(500);
-    plot::plotYValueWithColor(tmp,pst.holdSignal(0));
+    plot::plotYValueWithColor(tmp,pst.holdingSignal(0));
 
     tmp= stk_pool2.getStockByIdx(1)->getDataByDataName("收盘价");
     tmp.resize(500);
-    plot::plotYValueWithColor(tmp,pst.holdSignal(1));
+    plot::plotYValueWithColor(tmp,pst.holdingSignal(1));
     // plot::plotYValue(tmp);
     cout<<callback.printResult()<<std::endl;
 

@@ -21,6 +21,7 @@ public:
     int getDataLen();
     int getStockNum();
     void addStock(Stock *stk);
+    std::vector<std::string> m_dates; 
 };
 
 #endif // STOCKPOOL_H

@@ -127,7 +127,7 @@ void PairTradingStrategy::callbackByDay(std::vector<int> &cur_pos,double &capita
         } 
 }
 
-std::vector<double> PairTradingStrategy::holdSignal(int idx)
+std::vector<double> PairTradingStrategy::holdingSignal(int idx)
 {
     // debug use delete later
     std::vector<double>  ans;
