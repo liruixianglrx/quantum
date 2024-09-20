@@ -8,6 +8,7 @@ public:
     // Constructor
     DateTime(){};
     DateTime(const std::string& dateStr);
+    DateTime(int y, int m, int d);
 
     // Convert the date to a string in the format YYYY-MM-DD
     std::string toString() const;
@@ -21,9 +22,6 @@ public:
 
 private:
     int m_year, m_month, m_day;
-
-    // Private constructor used internally
-    DateTime(int y, int m, int d);
 
     // Check if the date is valid
     bool isValidDate() const;

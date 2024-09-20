@@ -30,7 +30,7 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
         auto type = it->typeAsString();
         std::string tmp = it->getString();
         // auto t2 =it->get<std::string>();
-        stk_pool->m_dates.push_back(it->getString());
+        stk_pool->m_dates.push_back(it->get<int>());
     }
 
     for (auto &row : wks.rows(m_row_pos,wks.rowCount() -2)) {
