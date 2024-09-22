@@ -33,23 +33,26 @@ void DataReader::readDataFromWorksheet(const std::string &work_sheet,StockPool *
         stk_pool->m_dates.push_back(it->getString());
     }
 
+    Stock *stock;
     for (auto &row : wks.rows(m_row_pos,wks.rowCount() -2)) {
-        Stock *stock;
-
         //股票信息录入
         std::vector<XLCellValue> read_values = row.values();
         auto start_value = read_values.begin();
         auto end_value = start_value + m_column_pos - 2;
 
-        for (auto it = start_value; it != end_value; it++){
-            if (it == start_value) {
-                //add stock and set stock code
-                stk_pool->addStockByCode(it->getString());
+        //加入新股票，和其股票信息
+        if (stock->m_stock_code != start_value->getString())
+        {
+            for (auto it = start_value; it != end_value; it++){
+                if (it == start_value) {
+                    //add stock and set stock code
+                    stk_pool->addStockByCode(it->getString());
 
-                stock = stk_pool->getStockByCode(it->getString());
-                stock->m_stock_code = it->getString();
-            } else {
-                stock->m_stock_info.emplace_back(it->getString());
+                    stock = stk_pool->getStockByCode(it->getString());
+                    stock->m_stock_code = it->getString();
+                } else {
+                    stock->m_stock_info.emplace_back(it->getString());
+                }
             }
         }
 
