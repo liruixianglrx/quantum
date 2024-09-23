@@ -1,0 +1,156 @@
+2020-11-10 BUY
+positions are 78 -111 
+prices are 101.19 18.35 
+-----------------
+2020-12-11 LIQUID
+positions are 0 0 
+prices are 109.8 21.19 
+-----------------
+2021-01-05 SELL
+positions are -59 89 
+prices are 137.46 23.62 
+-----------------
+2021-01-14 LIQUID
+positions are 0 0 
+prices are 136.49 27.45 
+-----------------
+2021-02-02 BUY
+positions are 62 -71 
+prices are 136.1 30.55 
+-----------------
+2021-02-09 LIQUID
+positions are 0 0 
+prices are 160.3 30.34 
+-----------------
+2021-03-26 SELL
+positions are -72 98 
+prices are 134.04 25.41 
+-----------------
+2021-03-31 LIQUID
+positions are 0 0 
+prices are 120.51 26.4 
+-----------------
+2021-05-26 SELL
+positions are -85 112 
+prices are 123.66 24.15 
+-----------------
+2021-06-11 LIQUID
+positions are 0 0 
+prices are 109.79 23.49 
+-----------------
+2021-08-06 BUY
+positions are 119 -124 
+prices are 96.55 23.65 
+-----------------
+2021-09-15 LIQUID
+positions are 0 0 
+prices are 97 25.67 
+-----------------
+2021-09-22 SELL
+positions are -117 124 
+prices are 96.86 23.35 
+-----------------
+2021-11-12 LIQUID
+positions are 0 0 
+prices are 88.27 19.34 
+-----------------
+2021-11-18 BUY
+positions are 130 -141 
+prices are 90 21.32 
+-----------------
+2021-12-07 LIQUID
+positions are 0 0 
+prices are 90.64 19.87 
+-----------------
+2021-12-22 SELL
+positions are -122 160 
+prices are 97.75 19.14 
+-----------------
+2022-01-05 LIQUID
+positions are 0 0 
+prices are 98.56 21.76 
+-----------------
+2022-03-16 SELL
+positions are -157 175 
+prices are 77.53 17.91 
+-----------------
+2022-03-31 LIQUID
+positions are 0 0 
+prices are 81.82 19.95 
+-----------------
+2022-05-05 BUY
+positions are 218 -165 
+prices are 54.8 18.56 
+-----------------
+2022-06-30 LIQUID
+positions are 0 0 
+prices are 60.39 20.15 
+-----------------
+2022-10-18 SELL
+positions are -231 193 
+prices are 55.1 16.9 
+-----------------
+2022-11-23 LIQUID
+positions are 0 0 
+prices are 56.07 17.46 
+-----------------
+2023-02-13 BUY
+positions are 223 -167 
+prices are 56.45 19.35 
+-----------------
+2023-03-17 LIQUID
+positions are 0 0 
+prices are 54.06 18.81 
+-----------------
+2023-03-28 SELL
+positions are -226 178 
+prices are 54.27 17.66 
+-----------------
+2023-06-02 LIQUID
+positions are 0 0 
+prices are 53.43 15.49 
+-----------------
+2023-06-27 BUY
+positions are 234 -199 
+prices are 51.73 15.6 
+-----------------
+2023-07-13 LIQUID
+positions are 0 0 
+prices are 54.38 16.02 
+-----------------
+2023-08-23 SELL
+positions are -239 226 
+prices are 52.37 14.2 
+-----------------
+2023-09-21 LIQUID
+positions are 0 0 
+prices are 52.94 14.89 
+-----------------
+2023-10-20 BUY
+positions are 256 -221 
+prices are 49.03 14.55 
+-----------------
+2023-11-02 LIQUID
+positions are 0 0 
+prices are 50.87 14.4 
+-----------------
+2023-12-12 SELL
+positions are -259 245 
+prices are 49.98 13.57 
+-----------------
+2023-12-19 LIQUID
+positions are 0 0 
+prices are 46.79 13.13 
+-----------------
+2024-04-23 SELL
+positions are -242 225 
+prices are 55.92 15.41 
+-----------------
+2024-05-10 LIQUID
+positions are 0 0 
+prices are 53.53 16.01 
+-----------------
+2024-06-11 SELL
+positions are -260 249 
+prices are 54.12 14.5 
+-----------------

@@ -25,18 +25,18 @@ private:
     double m_capital,m_init_capital;
     double m_max_pullback=0;
     //买序号为idx，date的stock
-    std::vector<std::vector<Operation>> m_signals;
-    double getRealtimeCapital(int idx);
+    std::vector<std::unordered_map<std::string,Operation>> m_signals;
+    double getRealtimeAllCapital(int idx);
 
 public:
     CallBack(StockPool *stk_pool,IStrategy *s);
-    void generateSignals();
-    std::vector<std::vector<Operation>>& getSignals();
+    // void generateSignals();
+    std::vector<std::unordered_map<std::string,Operation>> &getSignals();
     void setInitialCapital(double c);
     std::vector<double> computeProfit();
     std::string printResult();
-
-    std::vector<int> m_cur_position;
+    // stock_code和仓位的映射
+    std::unordered_map<std::string,int> m_cur_position;
     std::vector<double> m_realtime_capital;
     CallBackResult m_callBackResult;
 };
