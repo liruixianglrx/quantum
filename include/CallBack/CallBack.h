@@ -20,13 +20,12 @@ struct CallBackResult {
 class CallBack
 {
 private:
-    StockPool *m_stk_pool;
-    IStrategy *m_stratege;
     double m_capital,m_init_capital;
     double m_max_pullback=0;
     //买序号为idx，date的stock
     std::vector<std::unordered_map<std::string,Operation>> m_signals;
     double getRealtimeAllCapital(int idx);
+    double getAllCapitalBycost(int day);
 
 public:
     CallBack(StockPool *stk_pool,IStrategy *s);
@@ -39,6 +38,8 @@ public:
     std::unordered_map<std::string,int> m_cur_position;
     std::vector<double> m_realtime_capital;
     CallBackResult m_callBackResult;
+    StockPool *m_stk_pool;
+    IStrategy *m_stratege;
 };
 
 #endif // CALLBACK_H

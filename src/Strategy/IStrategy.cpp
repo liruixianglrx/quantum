@@ -1,5 +1,5 @@
 #include "IStrategy.h"
-
+#include "Statics.h"
 TradingInfo::TradingInfo(double b,double s,double p):buy_price(b),sell_price(s),pos(p){};
 
 double TradingInfo::getRevenue(){
@@ -7,6 +7,16 @@ double TradingInfo::getRevenue(){
 }
 double TradingRecords::getWinningRates(){
     return double(profit_rates.size()) / double(profit_rates.size() + loss_rates.size());
+}
+
+void TradingRecords::printResult() {
+        //for debug: 
+    auto win_profit = Statics::mean(profit_rates);
+    auto loss_profit = Statics::mean(loss_rates);
+    printf("win p:%f lose p : %f\n",win_profit,loss_profit);
+    printf("win rates: %f\n",getWinningRates());
+    printf("total trading num: %f\n",trade_times);
+    printf("total profit is %f\n",total_profit);
 }
 void IStrategy::setStockPool(StockPool *s){m_stock_pool = s;}
 
@@ -20,4 +30,8 @@ void IStrategy::addTradingRecord(TradingInfo &t){
     } else {
         m_trading_records.loss_rates.push_back(profit/cost);
     }
+}
+
+TradingInfo IStrategy::getTradingInfoByStkCode(std::string code) {
+    return m_trading_info[code];
 }

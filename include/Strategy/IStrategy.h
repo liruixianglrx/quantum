@@ -21,6 +21,7 @@ struct TradingInfo {
     // 每次盈利和亏损的百分百
     std::vector<double> profit_rates,loss_rates;
     double getWinningRates();
+    void printResult();
     
 };
 class IStrategy {
@@ -33,15 +34,17 @@ class IStrategy {
         std::unordered_map<std::string,Operation> getSignals(){return m_signals;}
         void setStockPool(StockPool *s);
         void addTradingRecord(TradingInfo &t);
-    protected:
-        StockPool *m_stock_pool;
-        // std::vector<std::vector<Operation>> m_signals;
+        TradingInfo getTradingInfoByStkCode(std::string code);
+        // 交易总体的统计类
+        TradingRecords m_trading_records;
         //stk_code 与 signal的mapping
         std::unordered_map<std::string,Operation> m_signals;
         //stk_code 与 单笔交易的mapping
         std::unordered_map<std::string,TradingInfo> m_trading_info;
+    protected:
+        StockPool *m_stock_pool;
+        // std::vector<std::vector<Operation>> m_signals;
         // 持仓的stk_code
         std::unordered_set<std::string> m_holding_stocks_code;
-        TradingRecords m_trading_records;
 };
 #endif  //ISTRATEGY_H

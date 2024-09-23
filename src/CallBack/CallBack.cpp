@@ -3,6 +3,7 @@
 #include <iostream>
 //todo:computeProfit完成后删掉这个头文件
 #include "PairTradingStrategy.h"
+#include "Statics.h"
 #include <cmath>
 
 // void CallBack::generateSignals(){
@@ -41,10 +42,22 @@ double CallBack::getRealtimeAllCapital(int day){
     return tmpCapital;
  }
 
+ double CallBack::getAllCapitalBycost(int day){
+    double tmpCapital=m_capital;
+    for (auto pos :m_cur_position) {
+        auto price = m_stratege->getTradingInfoByStkCode(pos.first).buy_price;
+        tmpCapital = tmpCapital + pos.second * price;
+    }
+    return tmpCapital;
+ }
+
 std::vector<double> CallBack::computeProfit(){
     //todo : 应该在stategy里面有个成员函数，类型为函数指针
     std::vector<double> ans;
     std::vector<double> realtime_capital;
+
+    // debug
+    std::vector<double> cost_capital;
     // auto pstrategy = dynamic_cast<PairTradingStrategy*>(m_stratege);
     for (int day = 0;day < m_stk_pool->getDataLen();day++) {
         m_stratege->callbackByDay(m_cur_position,m_capital,day);
@@ -52,6 +65,7 @@ std::vector<double> CallBack::computeProfit(){
         ans.push_back(m_capital);
         auto tmp = getRealtimeAllCapital(day);
         realtime_capital.push_back(tmp);
+        cost_capital.push_back(getAllCapitalBycost(day));
         if (tmp < m_init_capital) {
              tmp = (m_init_capital-tmp) / m_init_capital;
             if (tmp > m_max_pullback) {
@@ -60,13 +74,15 @@ std::vector<double> CallBack::computeProfit(){
         }
     }
 
-    m_capital = getRealtimeAllCapital(m_stk_pool->getDataLen());
+    m_capital = getRealtimeAllCapital(m_stk_pool->getDataLen()-1);
     
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
     double y = (m_capital / m_init_capital);
     double year = 365.0 / m_stk_pool->getDataLen() ;
     m_callBackResult.roe = pow(y,year) -1;
+
+    m_stratege->m_trading_records.printResult();
     return ans;
 }
 

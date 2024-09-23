@@ -64,7 +64,7 @@ double RSI(const std::vector<double>& data,int len) {
     double SMA_gain = SMA(gains,len,1);
     double SMA_loss = SMA(losses,len,1);
 
-    return SMA_gain/(SMA_gain+SMA_loss);
+    return SMA_gain/(SMA_gain+SMA_loss)*100;
 }
 
 // 计算SMA，返回当天的SMA，data len和len长度相同

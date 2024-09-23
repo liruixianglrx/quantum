@@ -13,16 +13,23 @@ using namespace std;
 
 
 int main() {
-    DataReader dr ("shangzheng200");
+    DataReader dr ("zhongzheng100");
     StockPool stk_pool;
     dr.readDataFromWorksheet("历史行情",&stk_pool);
 
     RSIStrategy rstg;
+    double RSIUpValue = 20;
+    double RSIDownValue =3;
+    double Slots = 4;
+    rstg.setSlots(Slots);
+    rstg.setRSIUpValue(RSIUpValue);
+    rstg.setRSIDownValue(RSIDownValue);
     CallBack callback(&stk_pool,&rstg);
 
     callback.setInitialCapital(100000);
     callback.computeProfit();
 
-    cout<<callback.printResult();
+    printf("RSI : %f %f,Slots : %f\n",RSIDownValue,RSIUpValue,Slots);
+    cout<<callback. printResult();
     return 0;
 }
