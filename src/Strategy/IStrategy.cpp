@@ -35,3 +35,14 @@ void IStrategy::addTradingRecord(TradingInfo &t){
 TradingInfo IStrategy::getTradingInfoByStkCode(std::string code) {
     return m_trading_info[code];
 }
+
+void IStrategy::clearSellStocks(){
+    for (auto signal=m_signals.begin();signal != m_signals.end();){
+        if (signal->second == SELL) {
+            m_trading_info.erase(signal->first);
+            signal = m_signals.erase(signal);
+        } else {
+            signal++;
+        }
+    }
+}

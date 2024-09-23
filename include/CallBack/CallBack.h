@@ -21,6 +21,7 @@ class CallBack
 {
 private:
     double m_capital,m_init_capital;
+    std::string m_start_date,m_end_date;
     double m_max_pullback=0;
     //买序号为idx，date的stock
     std::vector<std::unordered_map<std::string,Operation>> m_signals;
@@ -34,6 +35,8 @@ public:
     void setInitialCapital(double c);
     std::vector<double> computeProfit();
     std::string printResult();
+    void setStartDate(std::string date);
+    void setEndDate(std::string date);
     // stock_code和仓位的映射
     std::unordered_map<std::string,int> m_cur_position;
     std::vector<double> m_realtime_capital;

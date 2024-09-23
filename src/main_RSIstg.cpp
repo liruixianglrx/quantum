@@ -13,6 +13,8 @@ using namespace std;
 
 
 int main() {
+    //纳指参数 0 5 slots 5, >
+    //上证100 3 20 slots 4, <
     DataReader dr ("zhongzheng100");
     StockPool stk_pool;
     dr.readDataFromWorksheet("历史行情",&stk_pool);
@@ -25,6 +27,8 @@ int main() {
     rstg.setRSIUpValue(RSIUpValue);
     rstg.setRSIDownValue(RSIDownValue);
     CallBack callback(&stk_pool,&rstg);
+    callback.setStartDate("2014-09-22");
+    callback.setEndDate("2024-09-23");
 
     callback.setInitialCapital(100000);
     callback.computeProfit();

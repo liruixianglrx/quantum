@@ -20,6 +20,7 @@ public:
     // Calculate the number of days between this date and another date
     int daysBetween(const DateTime& other) const;
 
+    DateTime IToD(int date);
 private:
     int m_year, m_month, m_day;
 
@@ -36,4 +37,5 @@ private:
     int daysFromYear2000() const;
 };
 
+extern DateTime DATETIME_START;
 #endif // DATETIME_H

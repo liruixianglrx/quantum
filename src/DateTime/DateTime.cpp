@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <stdexcept>
 
+DateTime DATETIME_START("1900-01-01");
 DateTime::DateTime(const std::string& dateStr) {
     std::istringstream iss(dateStr);
     char dash1, dash2;

@@ -34,6 +34,7 @@ class IStrategy {
         std::unordered_map<std::string,Operation> getSignals(){return m_signals;}
         void setStockPool(StockPool *s);
         void addTradingRecord(TradingInfo &t);
+        void clearSellStocks();
         TradingInfo getTradingInfoByStkCode(std::string code);
         // 交易总体的统计类
         TradingRecords m_trading_records;

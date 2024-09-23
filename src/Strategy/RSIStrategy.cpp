@@ -1,5 +1,6 @@
 #include "RSIStrategy.h"
 #include "Statics.h"
+#include "OutputTools.h"
 #include <fstream>
 // void RSIStrategy::computeSignals() {
 
@@ -38,12 +39,21 @@ void RSIStrategy::callbackByDay(std::unordered_map<std::string,int> &cur_pos,dou
             m_trading_info[signal->first].sell_price = price;
             // printf("name is %s\n",m_stock_pool->getStockByCode(signal->first)->m_stock_info[0].c_str()); 
             // printf("revenue is : %f   name is : %s\n",m_trading_info[signal->first].getRevenue(),m_stock_pool->getStockByCode(signal->first)->m_stock_info[0].c_str());
-
             addTradingRecord(m_trading_info[signal->first]);
-            m_trading_info.erase(signal->first);
-            signal = m_signals.erase(signal);
+            // m_trading_info.erase(signal->first);
+            // signal = m_signals.erase(signal);
+            signal++;
         }
     }
+
+    // for (auto signal=m_signals.begin();signal != m_signals.end();){
+    //     if (signal->second == SELL) {
+    //         m_trading_info.erase(signal->first);
+    //         signal = m_signals.erase(signal);
+    //     } else {
+    //         signal++;
+    //     }
+    // }
 }
 
 void RSIStrategy::computeSignalsByDay(int day) {

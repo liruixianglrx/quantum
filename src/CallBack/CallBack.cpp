@@ -1,10 +1,12 @@
 #include "CallBack.h"
+#include "DateTime.h"
 #include "Enum.h"
 #include <iostream>
 //todo:computeProfit完成后删掉这个头文件
 #include "PairTradingStrategy.h"
 #include "Statics.h"
 #include <cmath>
+#include "OutputTools.h"
 
 // void CallBack::generateSignals(){
 //     m_stratege->computeSignals();
@@ -58,10 +60,19 @@ std::vector<double> CallBack::computeProfit(){
 
     // debug
     std::vector<double> cost_capital;
+
+    DateTime start_time = DateTime(m_start_date);
+    DateTime end_time = DateTime(m_end_date);
     // auto pstrategy = dynamic_cast<PairTradingStrategy*>(m_stratege);
     for (int day = 0;day < m_stk_pool->getDataLen();day++) {
-        m_stratege->callbackByDay(m_cur_position,m_capital,day);
+        auto today = DateTime::daysBefore(DATETIME_START,-m_stk_pool->m_dates[day]+2).toString();
+        if (today < m_start_date || today > m_end_date) {
+            continue;
+        }
 
+        m_stratege->callbackByDay(m_cur_position,m_capital,day);
+        OutputSignals(this,day);
+        m_stratege->clearSellStocks();
         ans.push_back(m_capital);
         auto tmp = getRealtimeAllCapital(day);
         realtime_capital.push_back(tmp);
@@ -79,7 +90,8 @@ std::vector<double> CallBack::computeProfit(){
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
     double y = (m_capital / m_init_capital);
-    double year = 365.0 / m_stk_pool->getDataLen() ;
+    double days = end_time.daysBetween(start_time);
+    double year = 365.0 / days;
     m_callBackResult.roe = pow(y,year) -1;
 
     m_stratege->m_trading_records.printResult();
@@ -88,4 +100,11 @@ std::vector<double> CallBack::computeProfit(){
 
 std::string CallBack::printResult(){
     return "\033[31m cointergration is :"+ m_callBackResult.cointergration+" Final Capital is :"+ std::to_string(m_callBackResult.final_cap)+" ROE is :"+std::to_string(m_callBackResult.roe)+" MAX pullback "+std::to_string(m_callBackResult.max_pullback) +"\033[0m \n";
+}
+
+void CallBack::setStartDate(std::string date){
+    m_start_date = date;
+}
+void CallBack::setEndDate(std::string date){
+    m_end_date = date;
 }
