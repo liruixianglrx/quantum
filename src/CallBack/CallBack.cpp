@@ -85,8 +85,12 @@ std::vector<double> CallBack::computeProfit(){
         }
     }
 
+    // 最新一天回测
+    // debug : 传入的参数不对，不应该是m_stk_pool->getDataLen()，而是距离那个start_time 多少天
+    m_stratege->computeSignalsByDay(m_stk_pool->getDataLen());
+    OutputSignals(this,m_stk_pool->getDataLen());
+
     m_capital = getRealtimeAllCapital(m_stk_pool->getDataLen()-1);
-    
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
     double y = (m_capital / m_init_capital);

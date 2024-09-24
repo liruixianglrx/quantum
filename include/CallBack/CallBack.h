@@ -35,6 +35,7 @@ public:
     void setInitialCapital(double c);
     std::vector<double> computeProfit();
     std::string printResult();
+    // 回撤日期，双闭区间
     void setStartDate(std::string date);
     void setEndDate(std::string date);
     // stock_code和仓位的映射

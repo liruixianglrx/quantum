@@ -51,7 +51,7 @@ double correlationCoefficient(const std::vector<double>& dataX, const std::vecto
     return numerator / denominator;
 }
 
-// 计算RSI ，包含当天的涨跌幅，如果len为2,需要传入3天的数据(包含当天)
+// 计算RSI ，包含当天的涨跌幅，如果len为2,需要传入3天的数据(包含当天前一天)
 double RSI(const std::vector<double>& data,int len) {
     std::vector <double>gains;
     std::vector <double>losses;

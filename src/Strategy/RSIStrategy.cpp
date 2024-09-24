@@ -23,7 +23,7 @@ void RSIStrategy::callbackByDay(std::unordered_map<std::string,int> &cur_pos,dou
             signal++;
             continue;
         } else if (signal->second == BUY) {
-            double price = m_stock_pool->getStockByCode(signal->first)->getDataByDataName("收盘价")[day];
+            double price = m_stock_pool->getStockByCode(signal->first)->getDataByDataName("开盘价")[day];
             int pos = capital_per_slot / price;
             cur_pos[signal->first] = cur_pos[signal->first] + pos;
             capital = capital - (price * pos);
@@ -85,16 +85,16 @@ void RSIStrategy::computeSignalsByDay(int day) {
             auto low_datas = stk->getDataByDataName("最低价");
 
             // 如果还没有股票数据，跳过
-            if (close_datas[day] == 0) {
+            if (day < close_datas.size() && close_datas[day] == 0) {
                 continue;
             }
             std::vector<double> tmp_rsi(close_datas.begin()+ day-m_period-1,close_datas.begin()+day);
-            std::vector<double> tmp_sma(close_datas.begin()+day-200,close_datas.begin()+day+1);
+            std::vector<double> tmp_sma(close_datas.begin()+day-200,close_datas.begin()+day);
             // todos: 尝试SMA为算术平均？？
 
             //debug
             auto rsi = Statics::RSI(tmp_rsi,m_period);
-            if (rsi < m_RSI_up_value && rsi >= m_RSI_down_value && Statics::SMA(tmp_sma,200,1) < close_datas[day]) {
+            if (rsi < m_RSI_up_value && rsi >= m_RSI_down_value && Statics::SMA(tmp_sma,200,1) > close_datas[day-1]) {
                 double NATR = Statics::NormalizedAverageTrueRange(close_datas,high_datas,low_datas);
                 heap.push(std::make_pair(stk->m_stock_code,NATR));
                 while (heap.size() > m_slots_nums - m_holding_stocks_code.size()) {
