@@ -94,7 +94,7 @@ void RSIStrategy::computeSignalsByDay(int day) {
 
             //debug
             auto rsi = Statics::RSI(tmp_rsi,m_period);
-            if (rsi < m_RSI_up_value && rsi >= m_RSI_down_value && Statics::SMA(tmp_sma,200,1) > close_datas[day-1]) {
+            if (rsi < m_RSI_up_value && rsi >= m_RSI_down_value && Statics::SMA(tmp_sma,200,1) < close_datas[day-1]) {
                 double NATR = Statics::NormalizedAverageTrueRange(close_datas,high_datas,low_datas);
                 heap.push(std::make_pair(stk->m_stock_code,NATR));
                 while (heap.size() > m_slots_nums - m_holding_stocks_code.size()) {

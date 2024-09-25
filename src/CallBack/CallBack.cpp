@@ -93,7 +93,7 @@ std::vector<double> CallBack::computeProfit(){
     m_stratege->computeSignalsByDay(day);
     OutputSignals(this,day);
 
-    m_capital = getRealtimeAllCapital(m_stk_pool->getDataLen()-1);
+    m_capital = getRealtimeAllCapital(day-1);
     m_callBackResult.max_pullback=m_max_pullback;
     m_callBackResult.final_cap=m_capital;
     double y = (m_capital / m_init_capital);
