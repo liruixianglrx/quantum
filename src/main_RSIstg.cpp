@@ -28,7 +28,7 @@ int main() {
     rstg.setRSIDownValue(RSIDownValue);
     CallBack callback(&stk_pool,&rstg);
     callback.setStartDate("2024-09-23");
-    callback.setEndDate("2024-09-24");
+    callback.setEndDate("2024-09-25");
 
     callback.setInitialCapital(100000);
     callback.computeProfit();

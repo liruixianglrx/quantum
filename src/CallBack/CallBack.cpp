@@ -64,10 +64,14 @@ std::vector<double> CallBack::computeProfit(){
     DateTime start_time = DateTime(m_start_date);
     DateTime end_time = DateTime(m_end_date);
     // auto pstrategy = dynamic_cast<PairTradingStrategy*>(m_stratege);
-    for (int day = 0;day < m_stk_pool->getDataLen();day++) {
+    int day = 0;
+    for (day = 0;day < m_stk_pool->getDataLen();day++) {
         auto today = DateTime::daysBefore(DATETIME_START,-m_stk_pool->m_dates[day]+2).toString();
-        if (today < m_start_date || today > m_end_date) {
+        if (today < m_start_date) {
             continue;
+        }
+        if (today > m_end_date) {
+            break;
         }
 
         m_stratege->callbackByDay(m_cur_position,m_capital,day);
@@ -84,11 +88,10 @@ std::vector<double> CallBack::computeProfit(){
             }
         }
     }
-
-    // 最新一天回测
-    // debug : 传入的参数不对，不应该是m_stk_pool->getDataLen()，而是距离那个start_time 多少天
-    m_stratege->computeSignalsByDay(m_stk_pool->getDataLen());
-    OutputSignals(this,m_stk_pool->getDataLen());
+   
+    // 最新一天回测,只产生信号，不调整仓位
+    m_stratege->computeSignalsByDay(day);
+    OutputSignals(this,day);
 
     m_capital = getRealtimeAllCapital(m_stk_pool->getDataLen()-1);
     m_callBackResult.max_pullback=m_max_pullback;
