@@ -3,7 +3,20 @@ cmake_minimum_required(VERSION 3.15)
 file(GLOB_RECURSE SRC_LIST
     "./*.cpp"
 )
+message(STATUS "files is ${SRC_LIST}")
+if(WIN32)
+    # Windows 特定设置
+    set(IGNORE_FILES
+    "${CMAKE_SOURCE_DIR}/src/./ADFTest/ADFTest.cpp"
+    "${CMAKE_SOURCE_DIR}/src/./PlotTools/PlotTools.cpp"
+    "${CMAKE_SOURCE_DIR}/src/./PlotTools/Plot.cpp"
+    )
+    list(REMOVE_ITEM SRC_LIST ${IGNORE_FILES})
+endif()
 
+
+message(STATUS "ignl is ${IGNORE_FILES}")
+message(STATUS "files is ${SRC_LIST}")
 #include headers
 file(GLOB INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/include/*")
 set(HEADER_DIRS)
