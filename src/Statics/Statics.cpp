@@ -83,8 +83,8 @@ double SMA(const std::vector<double> &data,int n,int weight) {
 double AverageTrueRange(const std::vector<double> &close,const std::vector<double> &high,const std::vector<double> &low,int day){
     std::vector<double> TR;
     for (int i=0;i<day;i++) {
-        double tmp;
-        tmp = std::max(abs(high[i] - low[i]),abs(high[i]-close[i]));
+        double tmp=0;
+        tmp = std::max(std::abs(high[i] - low[i]),std::abs(high[i]-close[i]));
         tmp = std::max(std::abs(low[i]-close[i]),tmp);
         TR.push_back(tmp);
     }

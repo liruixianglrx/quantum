@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 set(OPENXLSX_MAJOR_VERSION 0)
 set(OPENXLSX_MINOR_VERSION 3)
-set(OPENXLSX_MICRO_VERSION 1)
+set(OPENXLSX_MICRO_VERSION 2)
 project(OpenXLSX.Library VERSION 0.3.2 LANGUAGES CXX)
 set(CMAKE_DEBUG_POSTFIX d)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
@@ -117,7 +117,7 @@ set(OPENXLSX_SOURCES
 # STATIC AND SHARED LIBRARY
 #   Check that the input is valid
 #=======================================================================================================================
-if(NOT ${OPENXLSX_LIBRARY_TYPE} STREQUAL "STATIC" AND NOT ${OPENXLSX_LIBRARY_TYPE} STREQUAL "SHARED")
+if(NOT "${OPENXLSX_LIBRARY_TYPE}" STREQUAL "STATIC" AND NOT "${OPENXLSX_LIBRARY_TYPE}" STREQUAL "SHARED")
     message( FATAL_ERROR "Invalid library type. Must be SHARED or STATIC." )
 endif()
 
@@ -125,7 +125,7 @@ endif()
 # STATIC LIBRARY
 #   Define the static library
 #=======================================================================================================================
-if (${OPENXLSX_LIBRARY_TYPE} STREQUAL "STATIC")
+if ("${OPENXLSX_LIBRARY_TYPE}" STREQUAL "STATIC")
     add_library(OpenXLSX STATIC "")
     add_library(OpenXLSX::OpenXLSX ALIAS OpenXLSX)
     target_sources(OpenXLSX PRIVATE ${OPENXLSX_SOURCES})
@@ -153,7 +153,7 @@ endif ()
 # SHARED LIBRARY
 #   Define the shared library
 #=======================================================================================================================
-if (${OPENXLSX_LIBRARY_TYPE} STREQUAL "SHARED")
+if ("${OPENXLSX_LIBRARY_TYPE}" STREQUAL "SHARED")
     add_library(OpenXLSX SHARED "")
     add_library(OpenXLSX::OpenXLSX ALIAS OpenXLSX)
     target_sources(OpenXLSX PRIVATE ${OPENXLSX_SOURCES})

@@ -75,7 +75,7 @@ void RSIStrategy::computeSignalsByDay(int day) {
     if (m_holding_stocks_code.size()<m_slots_nums){
         std::priority_queue<std::pair<std::string,double>,std::vector<std::pair<std::string,double>>, Comparator> heap;
         for (int idx = 0;idx<m_stock_pool->getStockNum();idx++ ){
-            Stock* stk = m_stock_pool->getStockByIdx(idx); 
+            Stock* stk = m_stock_pool->getStockByIdx(idx);
             // 如果已经有持仓，跳过
             if (m_holding_stocks_code.find(stk->m_stock_code) != m_holding_stocks_code.end()) {
                 continue;
