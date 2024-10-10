@@ -68,6 +68,7 @@ double RSI(const std::vector<double>& data,int len) {
 }
 
 // 计算SMA，返回当天的SMA，data len和len长度相同
+// y[i]=(w * data[i] + (n-w)*y[i-1]) / n
 double SMA(const std::vector<double> &data,int n,int weight) {
     std::vector<double> y;
     y.push_back(data[0]);
@@ -79,7 +80,21 @@ double SMA(const std::vector<double> &data,int n,int weight) {
 
     return y[n-1];
 }
+double EMA(const std::vector<double> &data,int n) {
+    std::vector<double> y;
+    y.push_back(data[0]);
+    double tmp;
+    for (int i=1;i<n;i++) {
+        tmp =  (2*data[i] + (n-1)*y[i-1])/n+1;
+        y.push_back(tmp);
+    }
 
+    return y[n-1];
+}
+
+// double MACD(int n1,int n2,int n3) {
+    
+// }
 double AverageTrueRange(const std::vector<double> &close,const std::vector<double> &high,const std::vector<double> &low,int day){
     std::vector<double> TR;
     for (int i=0;i<day;i++) {
