@@ -80,9 +80,12 @@ void RSIStrategy::computeSignalsByDay(int day) {
             if (m_holding_stocks_code.find(stk->m_stock_code) != m_holding_stocks_code.end()) {
                 continue;
             }
-            auto close_datas = stk->getDataByDataName("收盘价");
-            auto high_datas = stk ->getDataByDataName("最高价");
-            auto low_datas = stk->getDataByDataName("最低价");
+            std::vector<double>  close_datas (stk->getDataByDataName("收盘价").begin(),stk->getDataByDataName("收盘价").begin()+day);
+            std::vector<double>  high_datas (stk->getDataByDataName("最高价").begin(),stk->getDataByDataName("最高价").begin()+day);
+            std::vector<double>  low_datas (stk->getDataByDataName("最低价").begin(),stk->getDataByDataName("最低价").begin()+day);
+            // auto close_datas = stk->getDataByDataName("收盘价");
+            // auto high_datas = stk ->getDataByDataName("最高价");
+            // auto low_datas = stk->getDataByDataName("最低价");
 
             // 如果还没有股票数据，跳过
             if (day < close_datas.size() && close_datas[day] == 0) {
@@ -97,12 +100,11 @@ void RSIStrategy::computeSignalsByDay(int day) {
             if (rsi < m_RSI_up_value && rsi >= m_RSI_down_value && Statics::SMA(tmp_sma,200,1) < close_datas[day-1]) {
                 double NATR = Statics::NormalizedAverageTrueRange(close_datas,high_datas,low_datas);
                 heap.push(std::make_pair(stk->m_stock_code,NATR));
-                while (heap.size() > m_slots_nums - m_holding_stocks_code.size()) {
-                    heap.pop();
-                }
             }
         }
-
+        while (heap.size() > m_slots_nums - m_holding_stocks_code.size()) {
+            heap.pop();
+        }
         // 加入到持仓中
         while (!heap.empty()) {
             auto it = heap.top();
