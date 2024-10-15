@@ -98,3 +98,7 @@ int DateTime::daysFromYear2000() const {
 int DateTime::daysBetween(const DateTime& other) const {
     return std::abs(daysFromYear2000() - other.daysFromYear2000());
 }
+
+DateTime DateTime::IToD(int date){
+    return DateTime::daysBefore(DATETIME_START,-date+2);
+}

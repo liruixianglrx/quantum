@@ -46,3 +46,45 @@ void IStrategy::clearSellStocks(){
         }
     }
 }
+void IStrategy::addStkAtDate(std::string date,std::string stk_code){
+    if (m_add_list.find(date) == m_add_list.end()) {
+        m_add_list[date] = std::vector{stk_code};
+    } else {
+        m_add_list[date].push_back(stk_code);
+    }
+}
+void IStrategy::removeStkAtDate(std::string date, std::string stk_code){
+   if (m_remove_list.find(date) == m_remove_list.end()) {
+        m_remove_list[date] = std::vector{stk_code};
+    } else {
+        m_remove_list[date].push_back(stk_code);
+    }
+}
+
+void IStrategy::addOrRemoveStkManually(std::string date) {
+    //无手动添加的股票
+    if (m_add_list.find(date) == m_add_list.end() && m_remove_list.find(date) == m_remove_list.end()){
+        return ;
+    }
+
+    if (m_add_list.find(date) != m_add_list.end()){
+        auto stk_codes = m_add_list[date];
+        for (auto stk_code : stk_codes) {
+            m_signals[stk_code] = BUY;
+        }
+        m_add_list.erase(date);
+    }
+
+    if (m_remove_list.find(date) != m_remove_list.end()){
+        auto stk_codes = m_remove_list[date];
+        for (auto stk_code : stk_codes) {
+            m_signals.erase(stk_code);
+        }
+        m_remove_list.erase(date);
+    }
+}
+
+void IStrategy::generateSignalsByDay(int day){
+    computeSignalsByDay(day);
+    addOrRemoveStkManually(DateTime::IToD(m_stock_pool->m_dates[day]).toString());
+}
