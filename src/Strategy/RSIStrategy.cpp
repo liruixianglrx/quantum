@@ -10,7 +10,7 @@ void RSIStrategy::preCompute() {
 }
 void RSIStrategy::callbackByDay(std::unordered_map<std::string,int> &cur_pos,double &capital,int day) {
     if (day < 200) return;
-    computeSignalsByDay(day);
+    generateSignalsByDay(day);
 
     double capital_per_slot ;
     if (m_slots_nums > m_holding_stocks_code.size()) {
@@ -37,11 +37,7 @@ void RSIStrategy::callbackByDay(std::unordered_map<std::string,int> &cur_pos,dou
             cur_pos.erase(signal->first);
             m_holding_stocks_code.erase(signal->first);
             m_trading_info[signal->first].sell_price = price;
-            // printf("name is %s\n",m_stock_pool->getStockByCode(signal->first)->m_stock_info[0].c_str()); 
-            // printf("revenue is : %f   name is : %s\n",m_trading_info[signal->first].getRevenue(),m_stock_pool->getStockByCode(signal->first)->m_stock_info[0].c_str());
             addTradingRecord(m_trading_info[signal->first]);
-            // m_trading_info.erase(signal->first);
-            // signal = m_signals.erase(signal);
             signal++;
         }
     }
@@ -71,7 +67,7 @@ void RSIStrategy::computeSignalsByDay(int day) {
         }
     }
 
-    // 买入新股票
+    // 买入新股票的信号产生
     if (m_holding_stocks_code.size()<m_slots_nums){
         std::priority_queue<std::pair<std::string,double>,std::vector<std::pair<std::string,double>>, Comparator> heap;
         for (int idx = 0;idx<m_stock_pool->getStockNum();idx++ ){
@@ -83,9 +79,6 @@ void RSIStrategy::computeSignalsByDay(int day) {
             std::vector<double>  close_datas (stk->getDataByDataName("收盘价").begin(),stk->getDataByDataName("收盘价").begin()+day);
             std::vector<double>  high_datas (stk->getDataByDataName("最高价").begin(),stk->getDataByDataName("最高价").begin()+day);
             std::vector<double>  low_datas (stk->getDataByDataName("最低价").begin(),stk->getDataByDataName("最低价").begin()+day);
-            // auto close_datas = stk->getDataByDataName("收盘价");
-            // auto high_datas = stk ->getDataByDataName("最高价");
-            // auto low_datas = stk->getDataByDataName("最低价");
 
             // 如果还没有股票数据，跳过
             if (day < close_datas.size() && close_datas[day] == 0) {
@@ -109,11 +102,9 @@ void RSIStrategy::computeSignalsByDay(int day) {
         while (!heap.empty()) {
             auto it = heap.top();
             heap.pop();
-            // m_holding_stocks_code.emplace(it.first);
             Stock * stk = m_stock_pool->getStockByCode(it.first);
             m_signals[stk->m_stock_code]=BUY;
         }
-        // m_cur_slots = m_holding_stocks_index.size();
     }
 }
 

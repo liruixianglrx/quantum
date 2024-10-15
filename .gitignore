@@ -2,3 +2,4 @@ build/*
 .vscode/*
 .cache/*
 include/python3.12/*
+**/signal.txt

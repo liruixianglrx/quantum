@@ -27,7 +27,6 @@ private:
     std::vector<std::unordered_map<std::string,Operation>> m_signals;
     double getRealtimeAllCapital(int idx);
     double getAllCapitalBycost(int day);
-
 public:
     CallBack(StockPool *stk_pool,IStrategy *s);
     // void generateSignals();
